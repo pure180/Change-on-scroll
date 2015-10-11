@@ -12,19 +12,19 @@
   var TriggerResize = function(element, options) {
     this.$element      = $(element)
     this.data          = $('[data-trigger="screen"]') ? $('[data-trigger="screen"]').data() : null
-    this.options       = $.extend({}, TriggerResize.DEFAULTS, options)
+    this.options       = $.extend({}, TriggerResize.DEFAULTS, this.data, options)
 
-    this.xs_max        = this.data.xs_max ? this.data.xs_max : this.options.xs_max
-    this.sm_min        = this.data.sm_min ? this.data.sm_min : this.options.sm_min
-    this.sm_max        = this.data.sm_max ? this.data.sm_max : this.options.sm_max
-    this.md_min        = this.data.md_min ? this.data.md_min : this.options.md_min
-    this.md_max        = this.data.md_max ? this.data.md_max : this.options.md_max
-    this.lg_min        = this.data.lg_min ? this.data.lg_min : this.options.lg_min
+    this.xs_max        = this.options.xs_max
+    this.sm_min        = this.options.sm_min
+    this.sm_max        = this.options.sm_max
+    this.md_min        = this.options.md_min
+    this.md_max        = this.options.md_max
+    this.lg_min        = this.options.lg_min
 
-    this.width_target  = this.data.width_target ? this.data.width_target : this.options.width_target
-    this.set_inside    = this.data.inside ? this.data.inside : this.options.inside
-    this.set_below     = this.data.below ? this.data.below : this.options.below
-    this.set_above     = this.data.above ? this.data.above : this.options.above
+    this.width_target  = this.options.width_target
+    this.set_inside    = this.options.inside
+    this.set_below     = this.options.below
+    this.set_above     = this.options.above
 
     this.init()
     }
