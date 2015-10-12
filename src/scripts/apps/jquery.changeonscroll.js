@@ -1,8 +1,8 @@
 /* ========================================================================
- * ChangeOnScroll: jquery.changeonscroll.js v1.0.2
+ * ChangeOnScroll: jquery.changeonscroll.js v2.0.0
  * Author: Daniel Pfisterer (info@daniel-pfisterer.de)
  * ========================================================================
- * Copyright 2015-2015 Ventzke Media
+ * Copyright 2015-2015 Daniel Pfisterer
  *
  * Licensed under MIT (https://opensource.org/licenses/MIT)
  * ======================================================================== */
@@ -28,7 +28,7 @@
 
     this.Init()
   }
-  ChangeOnScroll.VERSION  = '1.0.2'
+  ChangeOnScroll.VERSION  = '2.0.0'
 
   ChangeOnScroll.DEFAULTS = {
     beforeClass       : 'scroller_before',
@@ -92,7 +92,7 @@
     if(trigger){
       offsetTop = typeof trigger === 'number' ? trigger :  $(trigger).offset().top
     } else {
-      offsetTop = typeof this.options.top === 'number' ? this.options.top :  this.$element.offset().top
+      offsetTop = typeof this.options.top === 'number' ? this.options.top : this.$element.offset().top
     }
     return offsetTop;
   }
@@ -113,9 +113,9 @@
     return result.toFixed(6)
   }
 
-  ChangeOnScroll.prototype.Calculate = function() {
-    var forward = this.start + ( this.Percentage() * (this.end - this.start) * this.options.faktor )
-    var backward = this.start - ( this.Percentage() * ( this.start - this.end ) * this.options.faktor )
+  ChangeOnScroll.prototype.Calculate = function(index) {
+    var forward = Number(this.start[index]) + ( this.Percentage() * (this.end[index] - this.start[index]) * this.options.faktor )
+    var backward = Number(this.start[index]) - ( this.Percentage() * ( this.start[index] - this.end[index]) * this.options.faktor )
     var result = this.options.reverse ? backward : forward
     return result
   }
@@ -135,16 +135,14 @@
   }
 
   ChangeOnScroll.prototype.CalculatePositionAndSetStyles = function() {
-    var style = '', result = '', forward= '', backward = '', separator = ''
+    var style = '', separator = ''
     if(this.style && typeof this.style === 'string') {
-      this.$element.css( this.style, this.Calculate() )
+      this.$element.css( this.style, this.Calculate(0) )
     } else {
       for(var i in this.style) {
         separator = this.style.length - 1 === i ? ' ' : ', '
-        forward = Number(this.start[i]) + ( this.Percentage() * (this.end[i] - this.start[i]) * this.options.faktor )
-        backward = Number(this.start[i]) - ( this.Percentage() * ( this.start[i] - this.end[i] ) * this.options.faktor )
-        result = this.options.reverse ? backward : forward
-        style += this.style[i] + ':' + result + separator
+
+        style += this.style[i] + ':' + this.Calculate(i) + separator
       }
       var styles = eval('({' + style + '})')
       this.$element.css( styles )
