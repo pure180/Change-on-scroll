@@ -1,4 +1,5 @@
-# Bootstrap, Jade and LESS Template-App
+# Change on scroll
+## jQuery Plugin to change integer CSS Properties while scrolling
 
 ### Setup
 #### Requirements
@@ -8,7 +9,7 @@
 * bower
 * gulp
 
-#### Install 
+#### Install
 * Download NodeJs from [http://nodejs.org/download/] and install it.
 * Install gulp global, run > `npm install gulp -g`
 * Install bower global, run > `npm install bower -g`
