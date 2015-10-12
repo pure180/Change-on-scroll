@@ -1,0 +1,9 @@
+node_modules
+public
+src
+npm-debug.log
+.bowerrc
+.jshintrc
+bower.json
+gulpfile.js
+package.json
