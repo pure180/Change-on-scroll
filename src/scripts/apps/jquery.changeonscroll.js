@@ -114,8 +114,10 @@
   }
 
   ChangeOnScroll.prototype.Calculate = function(index) {
-    var forward = Number(this.start[index]) + ( this.Percentage() * (this.end[index] - this.start[index]) * this.options.faktor )
-    var backward = Number(this.start[index]) - ( this.Percentage() * ( this.start[index] - this.end[index]) * this.options.faktor )
+    var start = typeof this.start === 'number' ? this.start : this.start[index]
+    var end = typeof this.end === 'number' ? this.end : this.end[index]
+    var forward = Number(start) + ( this.Percentage() * (end - start) * this.options.faktor )
+    var backward = Number(start) - ( this.Percentage() * ( start - end) * this.options.faktor )
     var result = this.options.reverse ? backward : forward
     return result
   }
@@ -141,7 +143,6 @@
     } else {
       for(var i in this.style) {
         separator = this.style.length - 1 === i ? ' ' : ', '
-
         style += this.style[i] + ':' + this.Calculate(i) + separator
       }
       var styles = eval('({' + style + '})')
