@@ -6,6 +6,27 @@ block Vars
   - var page = {title: 'Page Title', name: 'Start', url: '/', parent: '', index: true}
 
 block main
+  .container
+    .row
+      .col-md-8
+        h2 How to use this plugin
+        h3 Insert the plugin to your sourcecode
+        p To activate the plugin, you will need the latest version of jQuery, I recommend version <i>2.1.4</i>. Just take the 
+          a(href="https://developers.google.com/speed/libraries/" title="Google Jquery CDN") Google CDN 
+          | and add it before the closing <code>&lt;/body&gt;</code>.
+        p Then download the latest version of my plugin 
+          a(href="https://github.com/pure180/Change-on-scroll/tree/gh-pages" title="Change on Scroll Plugin") here
+          | . Copy the JS-files to your HTML Project, for example to your <b>"/js"</b> folder and add it before the previously pasted Google CDN in to your sourcecode
+        p It then looks something like this:
+        
+        pre &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"&gt;&lt;/script&gt;
+          br
+          | &lt;script src="js/jquery.changeonscroll.min.js"&gt;&lt;/script&gt;
+        h3 Activate the Plugin via data attributes
+        p You can use this plugin purely through the markup API without writing a single line of JavaScript. This way should be your first consideration when using this plugin.
+        p To enable the functionality on scroll, select your desired HTML element which will be changed and set the necessary <i>"data-attributes"</i>. For example: you like that an absolute positioned element moves from left to right, than your DOM element should look like following example.
+        pre &lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500" data-top="0" data-bottom="500"&gt;&lt;/div&gt;
+        
   div.block.block-top(data-spy="scroller" data-style="top,left,height,width" data-start="100,100,100,100" data-end="1200,1200,500,500" data-reverse="0" data-faktor="1" data-top="100" data-bottom="1000") 
-  div.block.block-middle(data-spy="scroller" data-style="right,height,width" data-start="100,100,100" data-end="1000,400,600" data-reverse="0" data-faktor="1" data-top="100" data-bottom="1000") 
+  div.block.block-middle(data-spy="scroller" data-style="right,height,width" data-start="100,100,100" data-end="1000,400,600" data-top="100" data-bottom="1000") 
   div.block.block-bottom(data-spy="scroller" data-style="left" data-start="100" data-end="1000"  data-reverse="0" data-faktor="1" data-top="100" data-bottom="1000") 
