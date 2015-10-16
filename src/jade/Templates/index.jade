@@ -19,14 +19,23 @@ block main
           | . Copy the JS-files to your HTML Project, for example to your <b>"/js"</b> folder and add it before the previously pasted Google CDN in to your sourcecode
         p It then looks something like this:
         
-        pre &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"&gt;&lt;/script&gt;
+        pre.margin-middle-bottom &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"&gt;&lt;/script&gt;
           br
           | &lt;script src="js/jquery.changeonscroll.min.js"&gt;&lt;/script&gt;
         h3 Activate the Plugin via data attributes
         p You can use this plugin purely through the markup API without writing a single line of JavaScript. This way should be your first consideration when using this plugin.
         p To enable the functionality on scroll, select your desired HTML element which will be changed and set the necessary <i>"data-attributes"</i>. For example: you like that an absolute positioned element moves from left to right, than your DOM element should look like following example.
-        pre &lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500" data-top="0" data-bottom="500"&gt;&lt;/div&gt;
-        
+        pre.margin-middle-bottom &lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500" data-top="0" data-bottom="500"&gt;&lt;/div&gt;
+        p But no worries, you can also activate it using the conventional way as you are used to from jQuery. However i guess you are a bit Limited, unless you want to use one option setup for many DOM Elements.
+        pre.margin-middle-bottom <var><b>var</b> mysettings</var> = {
+          |   <var>style</var> : <var>'left'</var>, // CSS - Style property
+          |   <var>start</var> : <var>0</var>, // Start - Distance to top/left of start changing CSS Values
+          |   <var>end</var> : <var>500</var>, // End - Distance to top/left of end changing CSS Values
+          |   <var>top</var> : <var>0</var>, // Beginn of triggering event
+          |   <var>bottom</var> : <var>500</var>, // End of triggering event
+          | }
+          br
+          | <var>jQuery('.myelements').changeonscroll.DEFAULTS</var> = <var>mysettings</var>
   div.block.block-top(data-spy="scroller" data-style="top,left,height,width" data-start="100,100,100,100" data-end="1200,1200,500,500" data-reverse="0" data-faktor="1" data-top="100" data-bottom="1000") 
   div.block.block-middle(data-spy="scroller" data-style="right,height,width" data-start="100,100,100" data-end="1000,400,600" data-top="100" data-bottom="1000") 
   div.block.block-bottom(data-spy="scroller" data-style="left" data-start="100" data-end="1000"  data-reverse="0" data-faktor="1" data-top="100" data-bottom="1000") 
