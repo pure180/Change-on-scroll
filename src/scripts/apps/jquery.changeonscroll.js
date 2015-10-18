@@ -38,7 +38,7 @@
     bottom            : 0,
     start             : '',
     end               : '',
-    faktor            : 1
+    factor            : 1
   }
 
   ChangeOnScroll.prototype.Init = function() {
@@ -116,8 +116,8 @@
   ChangeOnScroll.prototype.Calculate = function(index) {
     var start = typeof this.start === 'number' ? this.start : this.start[index]
     var end = typeof this.end === 'number' ? this.end : this.end[index]
-    var forward = Number(start) + ( this.Percentage() * (end - start) * this.options.faktor )
-    var backward = Number(start) - ( this.Percentage() * ( start - end) * this.options.faktor )
+    var forward = Number(start) + ( this.Percentage() * (end - start) * this.options.factor )
+    var backward = Number(start) - ( this.Percentage() * ( start - end) * this.options.factor )
     var result = this.options.reverse ? backward : forward
     return result
   }
@@ -125,11 +125,11 @@
   ChangeOnScroll.prototype.SetStyles = function(value) {
     var style = '', separator = ''
     if(this.style && typeof this.style === 'string') {
-      this.$element.css(this.style, value * this.options.faktor)
+      this.$element.css(this.style, value * this.options.factor)
     } else {
       for(var i in this.style){
         separator = this.style.length - 1 === i ? '' : ', '
-        style += this.style[i] + ':' + value[i] * this.options.faktor + separator
+        style += this.style[i] + ':' + value[i] * this.options.factor + separator
       }
       var styles = eval('({' + style + '})')
       this.$element.css( styles )
