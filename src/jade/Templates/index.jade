@@ -14,20 +14,21 @@ block main
         p To activate the plugin, you will need the latest version of jQuery, I recommend version <i>2.1.4</i>. Just take the 
           a(href="https://developers.google.com/speed/libraries/" title="Google Jquery CDN") Google CDN 
           | and add it before the closing <code>&lt;/body&gt;</code>.
-        p Then download the latest version of my plugin 
+        p Then download the latest version of this plugin 
           a(href="https://github.com/pure180/Change-on-scroll/tree/gh-pages" title="Change on Scroll Plugin") here
-          | . Copy the JS-files to your HTML Project, for example to your <b>"/js"</b> folder and add it before the previously pasted Google CDN in to your sourcecode
+          | . Copy the JS-files to your HTML Project, for example to your <b>"/js"</b> folder and add it before the previously pasted Google CDN in to your source code
         p It then looks something like this:
         
         pre.margin-middle-bottom &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"&gt;&lt;/script&gt;
           br
           | &lt;script src="js/jquery.changeonscroll.min.js"&gt;&lt;/script&gt;
-        h3 Activate the Plugin via data attributes
+        h3 Activate this plugin via data attributes
         p You can use this plugin purely through the markup API without writing a single line of JavaScript. This way should be your first consideration when using this plugin.
-        p To enable the functionality on scroll, select your desired HTML element which will be changed and set the necessary <i>"data-attributes"</i>. For example: you like that an absolute positioned element moves from left to right, than your DOM element should look like following example.
+        p To enable the functionality on scroll, select your desired HTML element which will be changed and set the necessary <i>"data-attributes"</i>. For example: you like that an absolute positioned element moves from left to right, than your DOM element should look like the following example.
         pre.margin-middle-bottom &lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500" data-top="0" data-bottom="500"&gt;&lt;/div&gt;
-        p But no worries, you can also activate it using the conventional way as you are used to from jQuery. However i guess you are a bit Limited, unless you want to use one option setup for many DOM Elements.
-        pre.margin-middle-bottom <var><b>var</b> mysettings</var> = {
+        h4 Activate this plugin via JavaScript
+        p But no worries, you can also activate it using the conventional way as you are used to from jQuery. However, I guess you are a bit limited, unless you want to use one option setup for many DOM Elements.
+        pre.margin-large-bottom <var><b>var</b> mysettings</var> = jQuery.fn.changeonscroll.DEFAULTS {
           |   <var>style</var> : <var>'left'</var>, // CSS - Style property
           |   <var>start</var> : <var>0</var>, // Start - Distance to top/left of start changing CSS Values
           |   <var>end</var> : <var>500</var>, // End - Distance to top/left of end changing CSS Values
@@ -35,7 +36,183 @@ block main
           |   <var>bottom</var> : <var>500</var>, // End of triggering event
           | }
           br
-          | <var>jQuery('.myelements').changeonscroll.DEFAULTS</var> = <var>mysettings</var>
-  div.block.block-top(data-spy="scroller" data-style="top,left,height,width" data-start="100,100,100,100" data-end="1200,1200,500,500" data-reverse="0" data-faktor="1" data-top="100" data-bottom="1000") 
-  div.block.block-middle(data-spy="scroller" data-style="right,height,width" data-start="100,100,100" data-end="1000,400,600" data-top="100" data-bottom="1000") 
-  div.block.block-bottom(data-spy="scroller" data-style="left" data-start="100" data-end="1000"  data-reverse="0" data-faktor="1" data-top="100" data-bottom="1000") 
+          | <var>jQuery('.myelements').changeonscroll(mysettings)</var> 
+        h2 Plugin Options
+        p You can use all Plugin options as data attributes through the markup API. Just add your preferred option to the affected element or use JavaScript as usual.
+        blockquote
+          p.text-danger Beware, setting the respective data attributes will override any default options which are already set in JavaScript.
+        h4 Overview of all possible options
+        table.table.table-striped.margin-large-bottom
+          thead
+            tr
+              th(colspan="2") Options
+              th(rowspan="2") Properties
+            tr
+              td JavaScript
+              td markup API
+          tbody
+            tr
+              td: p <var>selector</var> 
+              td: p <code>data-spy="scroller"</code>
+              td: p This markup API initializes the plugin on the affected element and it starts to listen.
+            tr
+              td: p <var>style</var> 
+              td: p <code>data-style=""</code>
+              td
+                p The preferred CSS style, which will be assigned to the element when scrolling. You can choose one or more properties separated by commas. 
+                p In case of using multiple properties, you need to set the same amount of them also in:
+                ul
+                  li <var>start</var> or <code>data-start=""</code>
+                  li <var>end</var> or <code>data-end=""</code>
+                blockquote.margin-small-top
+                  p.text-danger Unless you don't set them, this plugin won't work as expected.
+                p Single property example:
+                  br
+                  code &lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500"&gt;&lt;/div&gt;
+                p Multiple properties example:
+                  br
+                  code &lt;div data-spy="scroller" data-style="left,top" data-start="0,10" data-end="500,1000"&gt;&lt;/div&gt;
+                h4.margin-middle-top Compatible CSS properties 
+                  small as of version 2.0.0 
+                p For now, you can use all integer CSS properties.
+                dl
+                  dt Positions:
+                  dd top, left, bottom, right, z-index
+                  dt Margins:
+                  dd margin-top, margin-right, margin-bottom, margin-left
+                  dt Paddings:
+                  dd padding-top, padding-right, padding-bottom, padding-left
+                  dt Dimensions:
+                  dd height, min-height, max-height, width, min-width, max-width
+                  dt Borders:
+                  dd border-width, border-top-width, border-right-width, border-bottom-width, border-left-width, border-radius, border-top-left-radius, border-top-right-radius, border-bottom-left-radius, border-bottom-right-radius
+                  dt Fonts:
+                  dd font-size, font-size-adjust, font-weight (as a numerical value), line-height, letter-spacing, text-indent
+                  dt Miscellaneous:
+                  dd opacity
+            tr
+              td: p <var>top</var> 
+              td: p <code>data-top=""</code>
+              td: p Top trigger, here the plugin begins to listen on the scroll event and starts to calculate the percentage position of the affected element, it overrides the given <b>start</b> value and changes the predefined class <code>scroller_before</code> to <code>scroller_while</code>.
+                blockquote.margin-small-top
+                  p.text-success This option can be an integer Value of your choice or an unique identifier like an ID.
+                p: b For example:
+                ul
+                  li If you set <code><var>top</var> : <var>500</var></code> or <code>data-top="500"</code>, the plugin starts to trigger the scroll event when <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var> reached <i>500px</i> from the top or left edge of the browser window.
+                  li If you set <code><var>top</var> : <var>'#topElement'</var></code> or <code>data-top="#topElement"</code>, the plugin starts to trigger the scroll event when <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var> reached the top or left edge of the given element.
+                  li.text-primary If you leave this blank, this plugins sets the top trigger to the <b>top</b> or <b>left</b> edge of the affected element. Depending on your given configuration.
+            tr
+              td: p <var>bottom</var> 
+              td: p <code>data-bottom=""</code>
+              td: p Bottom trigger, here the plugin ends to listen on the scroll event and stops to calculate the percentage position of the affected element, it sets the given <b>end</b> value and changes the previously specified class <code>scroller_while</code> to <code>scroller_after</code>.
+                blockquote.margin-small-top
+                  p.text-success This option can be an integer Value of your choice or an unique identifier like an ID.
+                p: b For example:
+                ul
+                  li If you set <code><var>bottom</var> : <var>1000</var></code> or <code>data-bottom="1000"</code>, the plugin stops to trigger the scroll event when <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var> reached <i>1000px</i> from the top or left edge of the browser window.
+                  li If you set <code><var>bottom</var> : <var>'#bottomElement'</var></code> or <code>data-bottom="#bottomElement"</code>, the plugin stops to trigger the scroll event when <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var> reached the top or right edge of the given element.
+                  li.text-primary If you leave this blank, this plugins sets the bottom trigger to the <b>bottom</b> or <b>right</b> edge of the affected element. Depending on your given configuration.
+            tr
+              td: p <var>start</var> 
+              td: p <code>data-start=""</code>
+              td
+                p Starting value of each CSS propertie. You can set one or multiple values separated by commas for the given CSS style properties in <var>style</var> or <code>data-style=""</code>.
+                p In case of using multiple properties, you need to set the same amount of them also in:
+                ul
+                  li <var>style</var> or <code>data-style=""</code>
+                  li <var>end</var> or <code>data-end=""</code>
+                blockquote.margin-small-top
+                  p.text-danger Unless you don't set them, this plugin won't work as expected.
+                p Single property example:
+                  br
+                  code &lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500"&gt;&lt;/div&gt;
+                p Multiple properties example:
+                  br
+                  code &lt;div data-spy="scroller" data-style="left,top" data-start="0,10" data-end="500,1000"&gt;&lt;/div&gt;
+
+                p This value is needed to calculates the percentage result in the relation to
+                ul
+                  li the top or left edge of the browser window <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var>,
+                  li this starting value (<var>start</var>, <code>data-start=""</code>),
+                  li the endinging value (<var>end</var>, <code>data-end=""</code>),
+                  li the factor (<var>factor</var>, <code>data-factor=""</code>).
+            tr
+              td: p <var>end</var> 
+              td: p <code>data-end=""</code>
+              td
+                p Ending value of each CSS propertie. You can set one or multiple values separated by commas for the given CSS style properties in <var>style</var> or <code>data-style=""</code>.
+                p In case of using multiple properties, you need to set the same amount of them also in:
+                ul
+                  li <var>style</var> or <code>data-style=""</code>
+                  li <var>start</var> or <code>data-start=""</code>
+                blockquote.margin-small-top
+                  p.text-danger Unless you don't set them, this plugin won't work as expected.
+                p Single property example:
+                  br
+                  code &lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500"&gt;&lt;/div&gt;
+                p Multiple properties example:
+                  br
+                  code &lt;div data-spy="scroller" data-style="left,top" data-start="0,10" data-end="500,1000"&gt;&lt;/div&gt;
+
+                p This value is needed to calculates the percentage result in the relation to
+                ul
+                  li the top or left edge of the browser window <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var>,
+                  li the starting value (<var>start</var>, <code>data-start=""</code>),
+                  li this endinging value (<var>end</var>, <code>data-end=""</code>),
+                  li the factor (<var>factor</var>, <code>data-factor=""</code>).
+            tr
+              td: p <var>reverse</var> 
+              td: p <code>data-reverse=""</code>
+              td: p Set this option if you want to calculate the percentage position of this element in reverse.
+            tr
+              td: p <var>factor</var> 
+              td: p <code>data-factor=""</code>
+              td: p With this option you can multiply the result of the percentage calculation by this value.
+            tr
+              td: p <var>beforeClass</var> 
+              td: p <code>data-beforeClass=""</code>
+              td: p With this option you can change the class name which initialize before this plugin triggers the scroll event.
+                p Default: <code>scroller_before</code>
+            tr
+              td: p <var>whileClass</var> 
+              td: p <code>data-whileClass=""</code>
+              td: p With this option you can change the class name which initialize while this plugin triggers the scroll event.
+                p Default: <code>scroller_while</code>
+            tr
+              td: p <var>afterClass</var> 
+              td: p <code>data-afterClass=""</code>
+              td: p With this option you can change the class name which initialize after this plugin triggers the scroll event.
+                p Default: <code>scroller_after</code>
+
+        h2 Plugin Events
+        p This plugin provides a few events for hooking into the changeonscroll functionality.
+        table.table.table-striped.margin-large-bottom
+          thead
+            tr
+              th Event type 
+              th Description
+          tbody
+            tr
+              td: p <var>before.changeonscroll</var> 
+              td: p This event fires before this plugin triggers the scroll event.
+                pre <var>jQuery('#element').on('before.changeonscroll', function(){</var>
+                  br
+                  |   <var class="text-muted"> // do something before triggering scroll </var>
+                  br
+                  | <var>})</var>
+            tr
+              td: p <var>inside.changeonscroll</var> 
+              td: p This event fires while this plugin triggers the scroll event.
+                pre <var>jQuery('#element').on('inside.changeonscroll', function(){</var>
+                  br
+                  |   <var class="text-muted"> // do something while triggering scroll </var>
+                  br
+                  | <var>})</var>
+            tr
+              td: p <var>after.changeonscroll</var> 
+              td: p This event fires after this plugin triggers the scroll event.
+                pre <var>jQuery('#element').on('after.changeonscroll', function(){</var>
+                  br
+                  |   <var class="text-muted"> // do something after triggering scroll </var>
+                  br
+                  | <var>})</var>
