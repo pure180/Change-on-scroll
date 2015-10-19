@@ -23,6 +23,8 @@
     this.end            = String(this.options.end).indexOf(',') > -1 ? this.options.end.split(",") : this.options.end;
     this.style          = String(this.options.style).indexOf(',') > -1 ? this.options.style.split(",") : this.options.style;
 
+    this.unit           = String(this.options.unit).indexOf(',') > -1 && this.options.unit ? this.options.unit.split(",") :  String(this.options.unit);
+
     //$('.inidcator.top').css('top', this.top )
     //$('.inidcator.bottom').css('top', this.bottom )
 
@@ -34,11 +36,12 @@
     beforeClass       : 'scroller_before',
     whileClass        : 'scroller_while',
     afterClass        : 'scroller_after',
+    unit              : '',
     top               : 0,
     bottom            : 0,
     start             : '',
     end               : '',
-    faktor            : 1
+    factor            : 1
   };
 
   ChangeOnScroll.prototype.Init = function() {
@@ -113,16 +116,11 @@
     return result.toFixed(6);
   };
 
-  ChangeOnScroll.prototype.Calculate = function() {
-    var forward = Number(this.start) + ( this.Percentage() * (this.end - this.start) * this.options.faktor );
-    var backward = Number(this.start) - ( this.Percentage() * ( this.start - this.end) * this.options.faktor );
-    var result = this.options.reverse ? backward : forward;
-    return result;
-  };
-
-  ChangeOnScroll.prototype.CalculateArray = function(index) {
-    var forward = Number(this.start[index]) + ( this.Percentage() * (this.end[index] - this.start[index]) * this.options.faktor );
-    var backward = Number(this.start[index]) - ( this.Percentage() * ( this.start[index] - this.end[index]) * this.options.faktor );
+  ChangeOnScroll.prototype.Calculate = function(index) {
+    var start = typeof this.start === 'number' ? this.start : this.start[index];
+    var end = typeof this.end === 'number' ? this.end : this.end[index];
+    var forward = Number(start) + ( this.Percentage() * (end - start) * this.options.factor);
+    var backward = Number(start) - ( this.Percentage() * ( start - end) * this.options.factor);
     var result = this.options.reverse ? backward : forward;
     return result;
   };
@@ -130,11 +128,11 @@
   ChangeOnScroll.prototype.SetStyles = function(value) {
     var style = '', separator = '';
     if(this.style && typeof this.style === 'string') {
-      this.$element.css(this.style, value * this.options.faktor);
+      this.$element.css(this.style, value * this.options.factor );
     } else {
       for(var i in this.style){
         separator = this.style.length - 1 === i ? '' : ', ';
-        style += this.style[i] + ':' + value[i] * this.options.faktor + separator;
+        style += this.style[i] + ':' + value[i] * this.options.factor + separator;
       }
       var styles = eval('({' + style + '})');
       this.$element.css( styles );
@@ -144,12 +142,11 @@
   ChangeOnScroll.prototype.CalculatePositionAndSetStyles = function() {
     var style = '', separator = '';
     if(this.style && typeof this.style === 'string') {
-      this.$element.css( this.style, this.Calculate() );
+      this.$element.css( this.style, this.Calculate(0));
     } else {
       for(var i in this.style) {
         separator = this.style.length - 1 === i ? ' ' : ', ';
-
-        style += this.style[i] + ':' + this.CalculateArray(i) + separator;
+        style += this.style[i] + ':' + this.Calculate(i) + separator;
       }
       var styles = eval('({' + style + '})');
       this.$element.css( styles );
@@ -175,11 +172,13 @@
     return this;
   };
 
-  $(window).on('load, scroll.changeonscroll.data-api', function() {
-    $('[data-spy="scroller"]').each(function(){
-      var $spy = $(this);
-      var data = $spy.data();
-      Plugin.call($spy, data);
+  $(window).on('load', function(){
+    $(this).on('scroll.changeonscroll.data-api', function() {
+      $('[data-spy="scroller"]').each(function(){
+        var $spy = $(this);
+        var data = $spy.data();
+        Plugin.call($spy, data);
+      });
     });
   });
 

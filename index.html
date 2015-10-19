@@ -9,18 +9,27 @@
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements--><!--[if lt IE 9]>
     <script src='http://html5shim.googlecode.com/svn/trunk/html5.js'></script>
     <![endif]-->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <link href="css/index.min.css" rel="stylesheet">
   </head>
-  <body>
+  <body data-spy="scroll" data-target="#sticky-nav">
     <!-- START <header>-->
     <header>
-      <div class="jumbotron">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <h1>Change on scroll</h1>
-              <p class="lead">jQuery Plugin to change integer CSS Properties while scrolling</p><a href="#" role="button" class="btn btn-primary btn-lg">Learn more</a>
+      <div id="jumbotron" class="jumbotron text-center">
+        <div data-spy="scroller" data-style="opacity" data-start="0.7" data-end="0" data-bottom="main" class="jumbotron-image"><img src="img/freely-10137.jpg" alt="Image By Joseph Hooper" data-spy="scroller" data-style="font-size" data-start="63" data-end="120" data-top="0" data-bottom="main" class="img-responsive"></div>
+        <div data-spy="scroller" data-style="top,opacity" data-start="-200,1" data-unit="px," data-end="1000,0" data-bottom="main" class="jumbotron-text">
+          <div class="jumbotron-text-inner">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <h1 data-spy="scroller" data-style="font-size" data-start="63" data-end="120" data-top="0" data-bottom="main">Change on scroll</h1>
+                  <p class="lead">This is a jQuery Plugin to change integer CSS Properties while scrolling.</p><a href="https://github.com/pure180/Change-on-scroll/archive/gh-pages.zip" role="button" title="Download Change on scroll" class="btn btn-success margin-small">Download <i class="glyphicon glyphicon-download"></i></a><a href="https://github.com/pure180/Change-on-scroll" role="button" title="Fork on Github" class="btn btn-primary margin-small">
+
+                    Fork on Github <i class="glyphicon glyphicon-share"></i></a><a href="https://github.com/pure180/Change-on-scroll" role="button" title="Fork on Github" class="btn btn-warning margin-small">
+
+                    Demos <i class="glyphicon glyphicon-share"></i></a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -29,16 +38,348 @@
     <!-- END </header>-->
     <!-- START <main>-->
     <main>
-      <div data-spy="scroller" data-style="top,left,height,width" data-start="100,100,100,100" data-end="1200,1200,500,500" data-reverse="0" data-faktor="1" data-top="100" data-bottom="1000" class="block block-top"> </div>
-      <div data-spy="scroller" data-style="right,height,width" data-start="100,100,100" data-end="1000,400,600" data-reverse="0" data-faktor="1" data-top="100" data-bottom="1000" class="block block-middle"> </div>
-      <div data-spy="scroller" data-style="left" data-start="100" data-end="1000" data-reverse="0" data-faktor="1" data-top="100" data-bottom="1000" class="block block-bottom"> </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <div id="sticky-nav" class="nav-outer">
+              <ul class="nav nav-stacked">
+                <li><a href="#What_does_it_do" title="What does it do?">What does it do?</a></li>
+                <li><a href="#How_to_use_this_plugin" title="How to use this plugin">How to use this plugin</a></li>
+                <li><a href="#Plugin_Options" title="Plugin Options">Plugin Options</a>
+                  <ul>
+                    <li><a href="#selector" title="Selector">Selector</a></li>
+                    <li><a href="#style" title="CSS style">CSS style</a></li>
+                    <li><a href="#top" title="Top trigger">Top trigger</a></li>
+                    <li><a href="#bottom" title="Bottom trigger">Bottom trigger</a></li>
+                    <li><a href="#start" title="Starting value">Starting value</a></li>
+                    <li><a href="#end" title="Ending value">Ending value</a></li>
+                    <li><a href="#reverse" title="Reverse calculation">Reverse calculation</a></li>
+                    <li><a href="#factor" title="Multiply factor">Multiply factor</a></li>
+                    <li><a href="#beforeClass" title="Class name before">Class name before</a></li>
+                    <li><a href="#whileClass" title="Class name before">Class name while</a></li>
+                    <li><a href="#afterClass" title="Class name before">Class name after</a></li>
+                  </ul>
+                </li>
+                <li><a href="#Plugin_Events" title="Plugin Events">Plugin Events</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div id="What_does_it_do">
+              <h2>What does it do?</h2>
+              <p>TODO adding a description</p>
+            </div>
+            <div id="How_to_use_this_plugin">
+              <h2>How to use this plugin</h2>
+              <h3>Insert the plugin to your sourcecode</h3>
+              <p>To activate the plugin, you will need the latest version of jQuery, I recommend version <i>2.1.4</i>. Just take the <a href="https://developers.google.com/speed/libraries/" title="Google Jquery CDN">Google CDN </a>and add it before the closing <code>&lt;/body&gt;</code>.</p>
+              <p>Then download the latest version of this plugin <a href="https://github.com/pure180/Change-on-scroll/tree/gh-pages" title="Change on Scroll Plugin">here</a>. Copy the JS-files to your HTML Project, for example to your <b>"/js"</b> folder and add it before the previously pasted Google CDN in to your source code</p>
+              <p>It then looks something like this:</p>
+              <pre class="margin-middle-bottom">&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"&gt;&lt;/script&gt;<br>&lt;script src="js/jquery.changeonscroll.min.js"&gt;&lt;/script&gt;</pre>
+              <h3>Activate this plugin via data attributes</h3>
+              <p>You can use this plugin purely through the markup API without writing a single line of JavaScript. This way should be your first consideration when using this plugin.</p>
+              <p>To enable the functionality on scroll, select your desired HTML element which will be changed and set the necessary <i>"data-attributes"</i>. For example: you like that an absolute positioned element moves from left to right, than your DOM element should look like the following example.</p>
+              <pre class="margin-middle-bottom">&lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500" data-top="0" data-bottom="500"&gt;&lt;/div&gt;</pre>
+              <h4>Activate this plugin via JavaScript</h4>
+              <p>But no worries, you can also activate it using the conventional way as you are used to from jQuery. However, I guess you are a bit limited, unless you want to use one option setup for many DOM Elements.</p>
+              <pre class="margin-large-bottom"><var><b>var</b> mysettings</var> = jQuery.fn.changeonscroll.DEFAULTS {
+  <var>style</var> : <var>'left'</var>, // CSS - Style property
+  <var>start</var> : <var>0</var>, // Start - Distance to top/left of start changing CSS Values
+  <var>end</var> : <var>500</var>, // End - Distance to top/left of end changing CSS Values
+  <var>top</var> : <var>0</var>, // Beginn of triggering event
+  <var>bottom</var> : <var>500</var>, // End of triggering event
+}<br><var>jQuery('.myelements').changeonscroll(mysettings)</var> </pre>
+            </div>
+            <div id="Plugin_Options">
+              <h2>Plugin Options</h2>
+              <p>You can use all Plugin options as data attributes through the markup API. Just add your preferred option to the affected element or use JavaScript as usual.</p>
+              <blockquote>
+                <p class="text-danger">Beware, setting the respective data attributes will override any default options which are already set in JavaScript.</p>
+              </blockquote>
+              <h4>Overview of all possible options</h4>
+              <table class="table table-striped margin-large-bottom">
+                <thead>
+                  <tr>
+                    <th colspan="2">Options</th>
+                    <th rowspan="2">Properties</th>
+                  </tr>
+                  <tr>
+                    <td>JavaScript</td>
+                    <td>markup API</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="selector">
+                    <td>
+                      <p><var>selector</var> </p>
+                    </td>
+                    <td>
+                      <p><code>data-spy="scroller"</code></p>
+                    </td>
+                    <td>
+                      <p>This markup API initializes the plugin on the affected element and it starts to listen.</p>
+                    </td>
+                  </tr>
+                  <tr id="style">
+                    <td>
+                      <p><var>style</var> </p>
+                    </td>
+                    <td>
+                      <p><code>data-style=""</code></p>
+                    </td>
+                    <td>
+                      <p>The preferred CSS style, which will be assigned to the element when scrolling. You can choose one or more properties separated by commas. </p>
+                      <p>In case of using multiple properties, you need to set the same amount of them also in:</p>
+                      <ul>
+                        <li><var>start</var> or <code>data-start=""</code></li>
+                        <li><var>end</var> or <code>data-end=""</code></li>
+                      </ul>
+                      <blockquote class="margin-small-top">
+                        <p class="text-danger">Unless you don't set them, this plugin won't work as expected.</p>
+                      </blockquote>
+                      <p>Single property example:<br><code>&lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500"&gt;&lt;/div&gt;</code></p>
+                      <p>Multiple properties example:<br><code>&lt;div data-spy="scroller" data-style="left,top" data-start="0,10" data-end="500,1000"&gt;&lt;/div&gt;</code></p>
+                      <h4 class="margin-middle-top">Compatible CSS properties <small>as of version 2.0.0 </small></h4>
+                      <p>For now, you can use all integer CSS properties.</p>
+                      <dl>
+                        <dt>Positions:</dt>
+                        <dd>top, left, bottom, right, z-index</dd>
+                        <dt>Margins:</dt>
+                        <dd>margin-top, margin-right, margin-bottom, margin-left</dd>
+                        <dt>Paddings:</dt>
+                        <dd>padding-top, padding-right, padding-bottom, padding-left</dd>
+                        <dt>Dimensions:</dt>
+                        <dd>height, min-height, max-height, width, min-width, max-width</dd>
+                        <dt>Borders:</dt>
+                        <dd>border-width, border-top-width, border-right-width, border-bottom-width, border-left-width, border-radius, border-top-left-radius, border-top-right-radius, border-bottom-left-radius, border-bottom-right-radius</dd>
+                        <dt>Fonts:</dt>
+                        <dd>font-size, font-size-adjust, font-weight (as a numerical value), line-height, letter-spacing, text-indent</dd>
+                        <dt>Miscellaneous:</dt>
+                        <dd>opacity</dd>
+                      </dl>
+                    </td>
+                  </tr>
+                  <tr id="top">
+                    <td>
+                      <p><var>top</var> </p>
+                    </td>
+                    <td>
+                      <p><code>data-top=""</code></p>
+                    </td>
+                    <td>
+                      <p>Top trigger, here the plugin begins to listen on the scroll event and starts to calculate the percentage position of the affected element, it overrides the given <b>start</b> value and changes the predefined class <code>scroller_before</code> to <code>scroller_while</code>.</p>
+                      <blockquote class="margin-small-top">
+                        <p class="text-success">This option can be an integer Value of your choice or an unique identifier like an ID.</p>
+                      </blockquote>
+                      <p><b>For example:</b></p>
+                      <ul>
+                        <li>If you set <code><var>top</var> : <var>500</var></code> or <code>data-top="500"</code>, the plugin starts to trigger the scroll event when <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var> reached <i>500px</i> from the top or left edge of the browser window.</li>
+                        <li>If you set <code><var>top</var> : <var>'#topElement'</var></code> or <code>data-top="#topElement"</code>, the plugin starts to trigger the scroll event when <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var> reached the top or left edge of the given element.</li>
+                        <li class="text-primary">If you leave this blank, this plugins sets the top trigger to the <b>top</b> or <b>left</b> edge of the affected element. Depending on your given configuration.</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr id="bottom">
+                    <td>
+                      <p><var>bottom</var> </p>
+                    </td>
+                    <td>
+                      <p><code>data-bottom=""</code></p>
+                    </td>
+                    <td>
+                      <p>Bottom trigger, here the plugin ends to listen on the scroll event and stops to calculate the percentage position of the affected element, it sets the given <b>end</b> value and changes the previously specified class <code>scroller_while</code> to <code>scroller_after</code>.</p>
+                      <blockquote class="margin-small-top">
+                        <p class="text-success">This option can be an integer Value of your choice or an unique identifier like an ID.</p>
+                      </blockquote>
+                      <p><b>For example:</b></p>
+                      <ul>
+                        <li>If you set <code><var>bottom</var> : <var>1000</var></code> or <code>data-bottom="1000"</code>, the plugin stops to trigger the scroll event when <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var> reached <i>1000px</i> from the top or left edge of the browser window.</li>
+                        <li>If you set <code><var>bottom</var> : <var>'#bottomElement'</var></code> or <code>data-bottom="#bottomElement"</code>, the plugin stops to trigger the scroll event when <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var> reached the top or right edge of the given element.</li>
+                        <li class="text-primary">If you leave this blank, this plugins sets the bottom trigger to the <b>bottom</b> or <b>right</b> edge of the affected element. Depending on your given configuration.</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr id="start">
+                    <td>
+                      <p><var>start</var> </p>
+                    </td>
+                    <td>
+                      <p><code>data-start=""</code></p>
+                    </td>
+                    <td>
+                      <p>Starting value of each CSS propertie. You can set one or multiple values separated by commas for the given CSS style properties in <var>style</var> or <code>data-style=""</code>.</p>
+                      <p>In case of using multiple properties, you need to set the same amount of them also in:</p>
+                      <ul>
+                        <li><var>style</var> or <code>data-style=""</code></li>
+                        <li><var>end</var> or <code>data-end=""</code></li>
+                      </ul>
+                      <blockquote class="margin-small-top">
+                        <p class="text-danger">Unless you don't set them, this plugin won't work as expected.</p>
+                      </blockquote>
+                      <p>Single property example:<br><code>&lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500"&gt;&lt;/div&gt;</code></p>
+                      <p>Multiple properties example:<br><code>&lt;div data-spy="scroller" data-style="left,top" data-start="0,10" data-end="500,1000"&gt;&lt;/div&gt;</code></p>
+                      <p>This value is needed to calculates the percentage result in the relation to</p>
+                      <ul>
+                        <li>the top or left edge of the browser window <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var>,</li>
+                        <li>this starting value (<var>start</var>, <code>data-start=""</code>),</li>
+                        <li>the endinging value (<var>end</var>, <code>data-end=""</code>),</li>
+                        <li>the factor (<var>factor</var>, <code>data-factor=""</code>).</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr id="end">
+                    <td>
+                      <p><var>end</var> </p>
+                    </td>
+                    <td>
+                      <p><code>data-end=""</code></p>
+                    </td>
+                    <td>
+                      <p>Ending value of each CSS propertie. You can set one or multiple values separated by commas for the given CSS style properties in <var>style</var> or <code>data-style=""</code>.</p>
+                      <p>In case of using multiple properties, you need to set the same amount of them also in:</p>
+                      <ul>
+                        <li><var>style</var> or <code>data-style=""</code></li>
+                        <li><var>start</var> or <code>data-start=""</code></li>
+                      </ul>
+                      <blockquote class="margin-small-top">
+                        <p class="text-danger">Unless you don't set them, this plugin won't work as expected.</p>
+                      </blockquote>
+                      <p>Single property example:<br><code>&lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500"&gt;&lt;/div&gt;</code></p>
+                      <p>Multiple properties example:<br><code>&lt;div data-spy="scroller" data-style="left,top" data-start="0,10" data-end="500,1000"&gt;&lt;/div&gt;</code></p>
+                      <p>This value is needed to calculates the percentage result in the relation to</p>
+                      <ul>
+                        <li>the top or left edge of the browser window <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var>,</li>
+                        <li>the starting value (<var>start</var>, <code>data-start=""</code>),</li>
+                        <li>this endinging value (<var>end</var>, <code>data-end=""</code>),</li>
+                        <li>the factor (<var>factor</var>, <code>data-factor=""</code>).</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr id="reverse">
+                    <td>
+                      <p><var>reverse</var> </p>
+                    </td>
+                    <td>
+                      <p><code>data-reverse=""</code></p>
+                    </td>
+                    <td>
+                      <p>Set this option if you want to calculate the percentage position of this element in reverse.</p>
+                    </td>
+                  </tr>
+                  <tr id="factor">
+                    <td>
+                      <p><var>factor</var> </p>
+                    </td>
+                    <td>
+                      <p><code>data-factor=""</code></p>
+                    </td>
+                    <td>
+                      <p>With this option you can multiply the result of the percentage calculation by this value.</p>
+                    </td>
+                  </tr>
+                  <tr id="beforeClass">
+                    <td>
+                      <p><var>beforeClass</var> </p>
+                    </td>
+                    <td>
+                      <p><code>data-beforeClass=""</code></p>
+                    </td>
+                    <td>
+                      <p>With this option you can change the class name which initialize before this plugin triggers the scroll event.</p>
+                      <p>Default: <code>scroller_before</code></p>
+                    </td>
+                  </tr>
+                  <tr id="whileClass">
+                    <td>
+                      <p><var>whileClass</var> </p>
+                    </td>
+                    <td>
+                      <p><code>data-whileClass=""</code></p>
+                    </td>
+                    <td>
+                      <p>With this option you can change the class name which initialize while this plugin triggers the scroll event.</p>
+                      <p>Default: <code>scroller_while</code></p>
+                    </td>
+                  </tr>
+                  <tr id="afterClass">
+                    <td>
+                      <p><var>afterClass</var> </p>
+                    </td>
+                    <td>
+                      <p><code>data-afterClass=""</code></p>
+                    </td>
+                    <td>
+                      <p>With this option you can change the class name which initialize after this plugin triggers the scroll event.</p>
+                      <p>Default: <code>scroller_after</code></p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="Plugin_Events">
+              <h2>Plugin Events</h2>
+              <p>This plugin provides a few events for hooking into the changeonscroll functionality.</p>
+              <table class="table table-striped margin-large-bottom">
+                <thead>
+                  <tr>
+                    <th>Event type </th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p><var>before.changeonscroll</var> </p>
+                    </td>
+                    <td>
+                      <p>This event fires before this plugin triggers the scroll event.</p>
+                      <pre><var>jQuery('#element').on('before.changeonscroll', function(){</var><br>  <var class="text-muted"> // do something before triggering scroll </var><br><var>})</var></pre>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><var>inside.changeonscroll</var> </p>
+                    </td>
+                    <td>
+                      <p>This event fires while this plugin triggers the scroll event.</p>
+                      <pre><var>jQuery('#element').on('inside.changeonscroll', function(){</var><br>  <var class="text-muted"> // do something while triggering scroll </var><br><var>})</var></pre>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><var>after.changeonscroll</var> </p>
+                    </td>
+                    <td>
+                      <p>This event fires after this plugin triggers the scroll event.</p>
+                      <pre><var>jQuery('#element').on('after.changeonscroll', function(){</var><br>  <var class="text-muted"> // do something after triggering scroll </var><br><var>})</var></pre>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
     <!--END </main>-->
     <!-- START - <footer>-->
     <footer></footer>
     <!-- END - </footer>-->
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="js/jquery.changeonscroll.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <script src="js/jquery.changeonscroll.min.js"></script>
+    <script type="text/javascript">
+      jQuery(window).on('load', function(){
+        jQuery('#sticky-nav').affix({
+          offset : {
+            top: function(){
+              return(this.top = jQuery('#jumbotron').outerHeight() )
+            }
+          }
+        }).on('affixed.bs.affix', function(){
+          console.log(jQuery(window).scrollTop())
+        })
+      })
+    </script>
   </body>
 </html>
