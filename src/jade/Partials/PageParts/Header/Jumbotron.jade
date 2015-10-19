@@ -1,7 +1,19 @@
-.jumbotron
-  .container
-    .row
-      .col-md-12
-        h1 Change on scroll
-        p.lead jQuery Plugin to change integer CSS Properties while scrolling
-        a.btn.btn-primary.btn-lg(href='#' role='button') Learn more
+#jumbotron.jumbotron.text-center
+  .jumbotron-image(data-spy="scroller" data-style="opacity" data-start="0.7" data-end="0" data-bottom="main")
+    img.img-responsive(src="img/freely-10137.jpg" alt="Image By Joseph Hooper" data-spy="scroller" data-style="font-size" data-start="63" data-end="120" data-top="0" data-bottom="main")
+  .jumbotron-text(data-spy="scroller" data-style="top,opacity" data-start="-200,1" data-unit="px," data-end="1000,0" data-bottom="main")
+    .jumbotron-text-inner
+      .container
+        .row
+          .col-md-12
+            h1(data-spy="scroller" data-style="font-size" data-start="63" data-end="120" data-top="0" data-bottom="main") Change on scroll
+            p.lead This is a jQuery Plugin to change integer CSS Properties while scrolling.
+            a.btn.btn-success.margin-small(href='https://github.com/pure180/Change-on-scroll/archive/gh-pages.zip' role='button' title="Download Change on scroll")
+              | Download 
+              i.glyphicon.glyphicon-download
+            a.btn.btn-primary.margin-small(href='https://github.com/pure180/Change-on-scroll' role='button' title="Fork on Github") 
+              | Fork on Github 
+              i.glyphicon.glyphicon-share
+            a.btn.btn-warning.margin-small(href='https://github.com/pure180/Change-on-scroll' role='button' title="Fork on Github") 
+              | Demos 
+              i.glyphicon.glyphicon-share
