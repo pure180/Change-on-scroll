@@ -23,6 +23,8 @@
     this.end            = String(this.options.end).indexOf(',') > -1 ? this.options.end.split(",") : this.options.end
     this.style          = String(this.options.style).indexOf(',') > -1 ? this.options.style.split(",") : this.options.style
 
+    this.unit           = String(this.options.unit).indexOf(',') > -1 && this.options.unit ? this.options.unit.split(",") :  String(this.options.unit)
+
     //$('.inidcator.top').css('top', this.top )
     //$('.inidcator.bottom').css('top', this.bottom )
 
@@ -34,6 +36,7 @@
     beforeClass       : 'scroller_before',
     whileClass        : 'scroller_while',
     afterClass        : 'scroller_after',
+    unit              : '',
     top               : 0,
     bottom            : 0,
     start             : '',
@@ -125,7 +128,7 @@
   ChangeOnScroll.prototype.SetStyles = function(value) {
     var style = '', separator = ''
     if(this.style && typeof this.style === 'string') {
-      this.$element.css(this.style, value * this.options.factor)
+      this.$element.css(this.style, value * this.options.factor )
     } else {
       for(var i in this.style){
         separator = this.style.length - 1 === i ? '' : ', '
@@ -139,7 +142,7 @@
   ChangeOnScroll.prototype.CalculatePositionAndSetStyles = function() {
     var style = '', separator = ''
     if(this.style && typeof this.style === 'string') {
-      this.$element.css( this.style, this.Calculate(0) )
+      this.$element.css( this.style, this.Calculate(0))
     } else {
       for(var i in this.style) {
         separator = this.style.length - 1 === i ? ' ' : ', '
@@ -169,12 +172,14 @@
     return this
   }
 
-  $(window).on('load, scroll.changeonscroll.data-api', function() {
-    $('[data-spy="scroller"]').each(function(){
-      var $spy = $(this)
-      var data = $spy.data()
-      Plugin.call($spy, data)
+  $(window).on('load', function(){
+    $(this).on('scroll.changeonscroll.data-api', function() {
+      $('[data-spy="scroller"]').each(function(){
+        var $spy = $(this)
+        var data = $spy.data()
+        Plugin.call($spy, data)
+      })
     })
-  });
+  })
 
 }(jQuery);
