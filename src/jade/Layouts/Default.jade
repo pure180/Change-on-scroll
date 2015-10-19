@@ -10,7 +10,7 @@ html(lang='en')
       //- Include <HEAD></HEAD>
       include ../Partials/Head.jade
   
-  body
+  body(data-spy="scroll" data-target="#sticky-nav")
     // START <header>
     header
       block header
@@ -30,3 +30,14 @@ html(lang='en')
     block scripts
       script(src='js/main.js')
       script(type="text/javascript").
+        jQuery(window).on('load', function(){
+          jQuery('#sticky-nav').affix({
+            offset : {
+              top: function(){
+                return(this.top = jQuery('#jumbotron').outerHeight() )
+              }
+            }
+          }).on('affixed.bs.affix', function(){
+            console.log(jQuery(window).scrollTop())
+          })
+        })
