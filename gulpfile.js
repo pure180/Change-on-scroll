@@ -45,15 +45,8 @@ var build_paths = {
 
 var files = {
     // JS Files
-    js_libs :           'libs.js',
     js_scroller:        'apps/jquery.changeonscroll.js',
-    js_triggerresize:   'apps/jquery.triggerresize.js',
-    js_plugins:         'plugins.js',
-    js_main:            'main.js',
 
-
-    // Less Files
-    less_libs: 'libs.less',
     less_index: 'index.less'
 };
 
@@ -94,9 +87,7 @@ var LessPluginAutoPrefix = require('less-plugin-autoprefix'),
 
 gulp.task('styles', function() {
   return gulp.src([
-      src_paths.less + '/' + files.less_libs,
-      src_paths.less + '/' + files.less_index,
-      src_paths.less + '/' + files.less_medias
+      src_paths.less + '/' + files.less_index
     ])
     .pipe(plumber(function (error) {
         gutil.log(error.message);
@@ -133,11 +124,7 @@ gulp.task('styles', function() {
 // Get all *.js files concat and copy a minified and a normal version of them to ./build/js
 gulp.task('scripts', function() {
   return gulp.src([
-      src_paths.scripts + '/' + files.js_libs ,
-      src_paths.scripts + '/' + files.js_scroller,
-      src_paths.scripts + '/' + files.js_triggerresize,
-      src_paths.scripts + '/' + files.js_plugins,
-      src_paths.scripts + '/' + files.js_main
+      src_paths.scripts + '/' + files.js_scroller
     ])
     .pipe(plumber(function (error) {
         gutil.log(error.message);
@@ -145,7 +132,7 @@ gulp.task('scripts', function() {
     }))
     .pipe(jshint( src_paths.scripts + '/.jshintrc'))
     //.pipe(jshint.reporter('default', { verbose: true }))
-    .pipe(concat('main.js'))
+    .pipe(concat('jQuery.changeonscroll.js'))
     .pipe(gulp.dest( build_paths.js ))
     .pipe(notify({
       message: 'Served "./build/js/<%= file.relative %>"!'
@@ -179,17 +166,6 @@ gulp.task('images', function() {
     }));
 });
 
-gulp.task('fonts', function() {
-
-    return gulp.src( src_paths.fonts )
-      .pipe(changed( build_paths.fonts ))
-      .pipe(gulp.dest( build_paths.fonts ))
-      .pipe(notify({
-        message: 'Copied "./build/fonts/<%= file.relative %>"'
-      }));
-
-});
-
 gulp.task('clean', function(cb) {
     del([
       root.build + '*.html',
@@ -213,7 +189,6 @@ gulp.task('watch', ['webserver'], function() {
   // Watch image files
   gulp.watch( src_paths.images, ['images']);
 
-
 });
 
 gulp.task('webserver', function() {
@@ -226,7 +201,7 @@ gulp.task('webserver', function() {
     }));
 });
 
-gulp.task('compile', ['jade', 'styles', 'scripts', 'copy', 'images', 'fonts'] );
+gulp.task('compile', ['jade', 'styles', 'scripts', 'copy', 'images'] );
 
 gulp.task('create', ['clean', 'compile']);
 
@@ -234,115 +209,4 @@ gulp.task('create', ['clean', 'compile']);
 gulp.task('start', ['clean', 'compile', 'watch'] );
 
 // Default task
-gulp.task('default', ['clean', 'jade', 'styles', 'scripts', 'copy', 'images', 'fonts'] );
-
-
-
-
-// ################################################ //
-// Install Bower Components
-
-
-var bower = require('bower'),
-    underscore = require('underscore'),
-    underscoreStr = require('underscore.string');
-
-
-gulp.task('bower', function(cb){
-  bower.commands.install([], {save: true}, {})
-    .on('end', function(installed){
-      cb(); // notify gulp that this task is finished
-    });
-});
-
-var exclude = [];
-
-gulp.task('bundle-libraries-auto', ['bower'], function(){
-  var bowerFile = require('./bower.json');
-  var bowerPackages = bowerFile.dependencies;
-  var bowerDir = root.bower_components;
-  var packagesOrder = [];
-  var mainFiles = [];
-
-  // Function for adding package name into packagesOrder array in the right order
-  function addPackage(name){
-    // package info and dependencies
-    var info = require(bowerDir + '/' + name + '/bower.json');
-    var dependencies = info.dependencies;
-
-    // add dependencies by repeat the step
-    if(!!dependencies){
-      underscore.each(dependencies, function(value, key){
-        if(exclude.indexOf(key) === -1){
-          addPackage(key);
-        }
-      });
-    }
-
-    // and then add this package into the packagesOrder array if they are not exist yet
-    if(packagesOrder.indexOf(name) === -1){
-      packagesOrder.push(name);
-    }
-  }
-
-  // calculate the order of packages
-  underscore.each(bowerPackages, function(value, key){
-    if(exclude.indexOf(key) === -1){ // add to packagesOrder if it's not in exclude
-      addPackage(key);
-    }
-  });
-
-  // get the main files of packages base on the order
-  underscore.each(packagesOrder, function(bowerPackage){
-    var info = require(bowerDir + '/' + bowerPackage + '/bower.json');
-    var main = info.main;
-    var mainFile = main;
-
-    // get only the .js file if mainFile is an array
-    if(underscore.isArray(main)){
-      underscore.each(main, function(file){
-        if(underscoreStr.endsWith(file, '.js')){
-          mainFile = file;
-        }
-      });
-    }
-
-    // make the full path
-    mainFile = bowerDir + '/' + bowerPackage + '/' + mainFile;
-
-    // only add the main file if it's a js file
-    if(underscoreStr.endsWith(mainFile, '.js')){
-      mainFiles.push(mainFile);
-    }
-  });
-
-  // run the gulp stream
-  return gulp.src(mainFiles)
-    .pipe(concat( files.js_libs ))
-    .pipe(gulp.dest( src_paths.scripts ));
-});
-
-gulp.task('bower-less', function(){
-  var bootstrap_less_files = gulp.src( root.bower_components + '/bootstrap/less/**/*')
-    .pipe(gulp.dest( src_paths.less + '/bootstrap' ));
-
-  var fontawesome_less_files = gulp.src( root.bower_components + '/fontawesome/less/**/*')
-    .pipe(gulp.dest( src_paths.less + '/font-awesome' ));
-
-  return bootstrap_less_files, fontawesome_less_files;
-
-});
-
-gulp.task('bower-fonts', function(){
-  var bootstrap_font_files = gulp.src( root.bower_components + '/bootstrap/fonts/**/*')
-    .pipe(gulp.dest( root.src + 'fonts' ));
-
-  var fontawesome_font_files = gulp.src( root.bower_components + '/fontawesome/fonts/**/*')
-    .pipe(gulp.dest( root.src + 'fonts' ));
-
-  return bootstrap_font_files, fontawesome_font_files;
-});
-
-gulp.task('bower-update', ['bundle-libraries-auto'], function() {
-    gulp.start('bower-less', 'bower-fonts');
-});
+gulp.task('default', ['clean', 'jade', 'styles', 'scripts', 'copy', 'images'] );
