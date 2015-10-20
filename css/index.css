@@ -299,6 +299,9 @@ header {
   display: table-cell;
   vertical-align: middle;
 }
+.display-block {
+  display: block;
+}
 .nav-stacked > li > a {
   padding: 5px;
 }
