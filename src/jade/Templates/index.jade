@@ -8,7 +8,7 @@ block Vars
 block main
   .container
     .row
-      .col-md-3
+      .col-sm-3.col-md-2.margin-middle-bottom
         #sticky-nav.nav-outer
           ul.nav.nav-stacked
             li: a(href="#What_does_it_do" title="What does it do?") What does it do?
@@ -29,9 +29,16 @@ block main
                 li: a(href="#afterClass" title="Class name before") Class name after
                 
             li: a(href="#Plugin_Events" title="Plugin Events") Plugin Events
-          
-              
-      .col-md-9
+          a.btn.btn-success.margin-small-bottom.display-block(href='https://github.com/pure180/Change-on-scroll/archive/gh-pages.zip' role='button' title="Download Change on scroll")
+            | Download 
+            i.glyphicon.glyphicon-download
+          a.btn.btn-primary.margin-small-bottom.display-block(href='https://github.com/pure180/Change-on-scroll' role='button' title="Fork on Github") 
+            | Fork on Github 
+            i.glyphicon.glyphicon-share
+          a.btn.btn-warning.margin-small-bottom.display-block(href='https://github.com/pure180/demos/index.html' role='button' title="View Examples") 
+            | View Examples 
+            i.glyphicon.glyphicon-share              
+      .col-sm-9
         #What_does_it_do
           h2 What does it do?
           p TODO adding a description
