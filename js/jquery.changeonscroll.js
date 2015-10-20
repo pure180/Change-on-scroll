@@ -126,13 +126,14 @@
   }
 
   ChangeOnScroll.prototype.SetStyles = function(value) {
-    var style = '', separator = ''
+    var style = '', separator = '', unit = ''
     if(this.style && typeof this.style === 'string') {
-      this.$element.css(this.style, value * this.options.factor )
+      this.$element.css(this.style, Number(value * this.options.factor)  + this.unit )
     } else {
       for(var i in this.style){
-        separator = this.style.length - 1 === i ? '' : ', '
-        style += this.style[i] + ':' + value[i] * this.options.factor + separator
+        separator = this.style.length === i ? '' : ', '
+        unit = this.unit[i] !== ' ' ?  this.unit[i] : ''
+        style += this.style[i] + ':' + '"' + (value[i] * this.options.factor) + unit + '"' + separator
       }
       var styles = eval('({' + style + '})')
       this.$element.css( styles )
@@ -140,13 +141,14 @@
   }
 
   ChangeOnScroll.prototype.CalculatePositionAndSetStyles = function() {
-    var style = '', separator = ''
+    var style = '', separator = '', unit = ''
     if(this.style && typeof this.style === 'string') {
-      this.$element.css( this.style, this.Calculate(0))
+      this.$element.css( this.style, this.Calculate(0) + this.unit )
     } else {
       for(var i in this.style) {
-        separator = this.style.length - 1 === i ? ' ' : ', '
-        style += this.style[i] + ':' + this.Calculate(i) + separator
+        separator = this.style.length == i ? ' ' : ','
+        unit = this.unit[i] !== ' ' ?  this.unit[i] : ''
+        style += this.style[i] + ':' + '"' + Number(this.Calculate(i)) + unit + '"'  + separator
       }
       var styles = eval('({' + style + '})')
       this.$element.css( styles )
