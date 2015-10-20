@@ -173,6 +173,11 @@
   }
 
   $(window).on('load', function(){
+    $('[data-spy="scroller"]').each(function(){
+      var $spy = $(this)
+      var data = $spy.data()
+      Plugin.call($spy, data)
+    })
     $(this).on('scroll.changeonscroll.data-api', function() {
       $('[data-spy="scroller"]').each(function(){
         var $spy = $(this)
