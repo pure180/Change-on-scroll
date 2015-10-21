@@ -14,6 +14,7 @@
     this.$element       = $(element)
     this.data           = this.$element.data()
     this.options        = $.extend({}, ChangeOnScroll.DEFAULTS, this.data, options)
+    this.$parent         = typeof this.options.parent === 'boolean' ? this.$element.parent() : $(this.options.parent)
 
     this.pos            = $(window).scrollTop()
     this.top            = this.offsetTop()
@@ -25,9 +26,10 @@
 
     this.unit           = String(this.options.unit).indexOf(',') > -1 && this.options.unit ? this.options.unit.split(",") :  String(this.options.unit)
 
-    //$('.inidcator.top').css('top', this.top )
-    //$('.inidcator.bottom').css('top', this.bottom )
-
+    if(this.options.indicators) {
+      $('.inidcator.top').css({'top': this.top, 'display' : 'block'})
+      $('.inidcator.bottom').css({'top': this.bottom, 'display' : 'block'})
+    }
     this.Init()
   }
   ChangeOnScroll.VERSION  = '2.0.0'
@@ -37,8 +39,8 @@
     whileClass        : 'scroller_while',
     afterClass        : 'scroller_after',
     unit              : '',
-    top               : 0,
-    bottom            : 0,
+    top               : '',
+    bottom            : '',
     start             : '',
     end               : '',
     factor            : 1
@@ -90,23 +92,26 @@
   }
 
   ChangeOnScroll.prototype.offsetTop = function() {
-    var trigger = this.options.top
+    var element = this.options.parent ? this.$parent : this.$element
+    var trigger = this.options.top ? this.options.top : element
     var offsetTop
     if(trigger){
       offsetTop = typeof trigger === 'number' ? trigger :  $(trigger).offset().top
     } else {
-      offsetTop = typeof this.options.top === 'number' ? this.options.top : this.$element.offset().top
+      offsetTop = typeof this.options.top === 'number' ? this.options.top : element.offset().top
     }
     return offsetTop;
   }
 
   ChangeOnScroll.prototype.offsetBottom = function() {
-    var trigger = this.options.bottom
+    var element = this.options.parent ? this.$parent : this.$element
+    var trigger = this.options.bottom ? this.options.bottom : element
     var offsetBottom
+    var elementHeight = element.outerHeight()
     if(trigger){
-      offsetBottom = typeof trigger === 'number' ? trigger : $(trigger).offset().top
+      offsetBottom = typeof trigger === 'number' ? trigger : $(trigger).offset().top + elementHeight
     } else {
-      offsetBottom = typeof this.options.bottom === 'number' ? this.options.bottom : this.$element.offset().top
+      offsetBottom = typeof this.options.bottom === 'number' ? this.options.bottom : element.offset().top + elementHeight
     }
     return offsetBottom;
   }
@@ -133,7 +138,7 @@
       for(var i in this.style){
         separator = this.style.length === i ? '' : ', '
         unit = this.unit[i] !== ' ' ?  this.unit[i] : ''
-        style += this.style[i] + ':' + '"' + (value[i] * this.options.factor) + unit + '"' + separator
+        style += '"' + this.style[i] + '"' + ':' + '"' + (value[i] * this.options.factor) + unit + '"' + separator
       }
       var styles = eval('({' + style + '})')
       this.$element.css( styles )
@@ -148,7 +153,7 @@
       for(var i in this.style) {
         separator = this.style.length == i ? ' ' : ','
         unit = this.unit[i] !== ' ' ?  this.unit[i] : ''
-        style += this.style[i] + ':' + '"' + Number(this.Calculate(i)) + unit + '"'  + separator
+        style += '"' + this.style[i] + '"' + ':' + '"' + Number(this.Calculate(i)) + unit + '"'  + separator
       }
       var styles = eval('({' + style + '})')
       this.$element.css( styles )

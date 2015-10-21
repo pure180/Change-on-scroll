@@ -13,16 +13,18 @@
     <link href="css/index.css" rel="stylesheet">
   </head>
   <body data-spy="scroll" data-target="#sticky-nav">
+    <div style="position: absolute; height: 1px; width: 100%; background-color: green; z-index:5000;" class="inidcator top"></div>
+    <div style="position: absolute; height: 1px; width: 100%; background-color: red; z-index: 5000" class="inidcator bottom"></div>
     <!-- START <header>-->
     <header>
       <div id="jumbotron" class="jumbotron text-center">
-        <div data-spy="scroller" data-style="opacity" data-start="0.7" data-end="0" data-bottom="main" class="jumbotron-image"><img src="img/freely-10137.jpg" alt="Image By Joseph Hooper" data-spy="scroller" data-style="font-size" data-start="63" data-end="120" data-top="0" data-bottom="main" class="img-responsive"></div>
-        <div data-spy="scroller" data-style="top,opacity" data-start="-200,1" data-unit="px, " data-end="1000,0" data-bottom="main" class="jumbotron-text">
+        <div data-spy="scroller" data-style="opacity" data-start="0.7" data-end="0" data-parent="header" data-indicators="true" class="jumbotron-image"><img src="img/freely-10137.jpg" alt="Image By Joseph Hooper" data-spy="scroller" data-style="max-width,margin-left" data-start="100,0" data-end="150,-25" data-unit="%,%" data-parent="header" class="img-responsive"></div>
+        <div data-spy="scroller" data-style="top,opacity" data-start="-200,1" data-unit="px, " data-end="1000,0" data-parent="header" class="jumbotron-text">
           <div class="jumbotron-text-inner">
             <div class="container">
               <div class="row">
                 <div class="col-md-12">
-                  <h1 data-spy="scroller" data-style="font-size" data-start="63" data-end="120" data-unit="px" data-top="0" data-bottom="main">Change on scroll</h1>
+                  <h1 data-spy="scroller" data-style="font-size" data-start="63" data-end="120" data-unit="px" data-parent="header">Change on scroll</h1>
                   <p class="lead">This is a jQuery Plugin to change integer CSS Properties while scrolling.</p><a href="https://github.com/pure180/Change-on-scroll/archive/gh-pages.zip" role="button" title="Download Change on scroll" class="btn btn-success margin-small">Download <i class="glyphicon glyphicon-download"></i></a><a href="https://github.com/pure180/Change-on-scroll" role="button" title="Fork on Github" class="btn btn-primary margin-small">
                      
                     Fork on Github <i class="glyphicon glyphicon-share"></i></a><a href="https://github.com/pure180/demos/index.html" role="button" title="View Examples" class="btn btn-warning margin-small">
@@ -380,8 +382,6 @@
               return(this.top = jQuery('#jumbotron').outerHeight() )
             }
           }
-        }).on('affixed.bs.affix', function(){
-          console.log(jQuery(window).scrollTop())
         })
       })
     </script>
