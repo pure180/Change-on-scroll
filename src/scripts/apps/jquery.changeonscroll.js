@@ -138,7 +138,7 @@
       for(var i in this.style){
         separator = this.style.length === i ? '' : ', '
         unit = this.unit[i] !== ' ' ?  this.unit[i] : ''
-        style += this.style[i] + ':' + '"' + (value[i] * this.options.factor) + unit + '"' + separator
+        style += '"' + this.style[i] + '"' + ':' + '"' + (value[i] * this.options.factor) + unit + '"' + separator
       }
       var styles = eval('({' + style + '})')
       this.$element.css( styles )
@@ -153,7 +153,7 @@
       for(var i in this.style) {
         separator = this.style.length == i ? ' ' : ','
         unit = this.unit[i] !== ' ' ?  this.unit[i] : ''
-        style += this.style[i] + ':' + '"' + Number(this.Calculate(i)) + unit + '"'  + separator
+        style += '"' + this.style[i] + '"' + ':' + '"' + Number(this.Calculate(i)) + unit + '"'  + separator
       }
       var styles = eval('({' + style + '})')
       this.$element.css( styles )
