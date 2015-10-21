@@ -11,6 +11,8 @@ html(lang='en')
       include ../Partials/Head.jade
   
   body(data-spy="scroll" data-target="#sticky-nav")
+    .inidcator.top(style="position: absolute; height: 1px; width: 100%; background-color: green; z-index:5000;")
+    .inidcator.bottom(style="position: absolute; height: 1px; width: 100%; background-color: red; z-index: 5000")
     // START <header>
     header
       block header
@@ -39,7 +41,5 @@ html(lang='en')
                 return(this.top = jQuery('#jumbotron').outerHeight() )
               }
             }
-          }).on('affixed.bs.affix', function(){
-            console.log(jQuery(window).scrollTop())
           })
         })

@@ -25,9 +25,10 @@
 
     this.unit           = String(this.options.unit).indexOf(',') > -1 && this.options.unit ? this.options.unit.split(",") :  String(this.options.unit)
 
-    //$('.inidcator.top').css('top', this.top )
-    //$('.inidcator.bottom').css('top', this.bottom )
-
+    if(this.options.indicators) {
+      $('.inidcator.top').css({'top': this.top, 'display' : 'block'})
+      $('.inidcator.bottom').css({'top': this.bottom, 'display' : 'block'})
+    }
     this.Init()
   }
   ChangeOnScroll.VERSION  = '2.0.0'
