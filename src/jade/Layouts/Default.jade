@@ -10,15 +10,21 @@ html(lang='en')
       //- Include <HEAD></HEAD>
       include ../Partials/Head.jade
   
-  body(data-spy="scroll" data-target="#sticky-nav")
-    .inidcator.top(style="position: absolute; height: 1px; width: 100%; background-color: green; z-index:5000;")
-    .inidcator.bottom(style="position: absolute; height: 1px; width: 100%; background-color: red; z-index: 5000")
+  if page.name == 'Start'
+    - var subclass = ''
+  else
+    - var subclass = 'sub' 
+  
+  body(data-spy="scroll" data-target="#sticky-nav" class=subclass)
+    .inidcator.top(style="position: absolute; height: 1px; width: 100%; background-color: blue; z-index:5000;")
+    .inidcator.bottom(style="position: absolute; height: 1px; width: 100%; background-color: yellow; z-index: 5000")
     // START <header>
     header
       block header
         //- Include Navbar-default
         include ../Partials/PageParts/Header/Navigation.jade
-        include ../Partials/PageParts/Header/Jumbotron.jade
+        if page.name == 'Start'
+          include ../Partials/PageParts/Header/Jumbotron.jade
     // END </header>
     // START <main>
     main

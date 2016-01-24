@@ -1,0 +1,12 @@
+//- test.jade
+extends ../Layouts/Default.jade
+
+block Vars
+  - var sub = false
+  - var page = {title: 'Conge on scroll / background-color', name: 'Demo1', url: 'demo-backgroundcolor.html', parent: '', index: true}
+
+block main
+  #background.background-color(data-spy="scroller" data-style="background-color" data-start="[3,114,146,1]" data-end="[27,146,3,0]")
+    .block-top(data-spy="scroller" data-style="left;top;opcity" data-start="0;0;1" data-end="100;100;0" data-unit="%;%;" data-parent="#background")
+    .block-middle(data-spy="scroller" data-style="top;right" data-start="100;0" data-end="0;100" data-unit="%;%" data-parent="#background")
+    .block-bottom

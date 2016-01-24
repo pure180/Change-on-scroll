@@ -7,11 +7,21 @@ html, body, header {
 
 main {
   min-height: 6000px;
+  .sub & {
+    padding-top: 100%;
+    padding-bottom: 100%;
+    min-height: inherit;
+  }
+
 }
 
 header {
   margin-bottom: @grid-gutter-width*2;
   overflow: hidden;
+  .sub & {
+    height: auto;
+    margin: 0;
+  }
 }
 
 .jumbotron {
@@ -91,7 +101,7 @@ header {
 .block {
     position: relative;
   &-top, &-middle, &-bottom {
-    position: fixed;
+    position: absolute;;
     height: 100px;
     width: 100px;
   }
@@ -101,14 +111,20 @@ header {
     background-color: blue;
   }
   &-middle {
-    top: 100px;
+    top: 100&;
     right: 0;
     background-color: red;
   }
 
   &-bottom {
-    top: 200px;
+    bottom: : 0;
     left: 0;
     background-color: green;
   }
+}
+.background-color {
+  position: relative;
+  width: 100%;
+  min-height: 2000px;
+  background-color: rgb(178,24,105);
 }
