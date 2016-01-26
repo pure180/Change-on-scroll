@@ -52,6 +52,7 @@
     bottom            : '',
     start             : '',
     end               : '',
+    parent            : '',
     factor            : 1
   };
 
