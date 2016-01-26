@@ -1,5 +1,5 @@
 /* ========================================================================
- * ChangeOnScroll: jquery.changeonscroll.js v2.1.0
+ * ChangeOnScroll: jquery.changeonscroll.js v2.1.1
  * Author: Daniel Pfisterer (info@daniel-pfisterer.de)
  * ========================================================================
  * Copyright 2015-2015 Daniel Pfisterer
@@ -41,7 +41,7 @@
     }
     this.Init();
   };
-  ChangeOnScroll.VERSION  = '2.1.0';
+  ChangeOnScroll.VERSION  = '2.1.1';
 
   ChangeOnScroll.DEFAULTS = {
     beforeClass       : 'scroller_before',
