@@ -169,12 +169,13 @@
   };
 
   function setColors(element, values){
-    var value ='', separator = '';
+    var value = [], separator = '';
     for(var i in values) {
       separator = values.length === Number(i)+1 ? '' : ', ';
       value += Number(values[i] * element.options.factor) + separator;
     }
-    return value;
+    return JSON.parse('[' + value + ']');
+  }
 
   function setTransform(element, value, index) {
     var styles = index ? element.style[index] : element.style,
