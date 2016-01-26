@@ -131,21 +131,40 @@
 
   // Set CSS styles on page load
   ChangeOnScroll.prototype.SetStyles = function(value) {
-    if(this.style && typeof this.style === 'string'  && this.style.indexOf('color') === -1) {
-
+    if(
+      this.style
+      &&
+      typeof this.style === 'string'
+      &&
+      this.style.indexOf('color') === -1
+      &&
+      this.style.indexOf('transform') === -1
+    ) {
       // Set CSS Style if data-style contains a single property
       this.$element.css(this.style, Number(value * this.options.factor)  + this.unit );
-
-    } else if(this.style && typeof this.style === 'string' && this.style.indexOf('color') ) {
-
+    } else if (
+      this.style
+      &&
+      typeof this.style === 'string'
+      &&
+      this.style.indexOf('color')
+      &&
+      this.style.indexOf('transform') === -1
+    ) {
       // If CSS property has keyword "Color"
-      this.$element.css(this.style, 'rgba(' + setColors(this, value) + ')' );
-
-    }  else {
-      //console.log(this.style)
+      this.$element.css(this.style, $.Color( setColors(this, value) ) );
+    } else if (
+      this.style
+      &&
+      typeof this.style === 'string'
+      &&
+      this.style.indexOf('transform') !== -1
+    ) {
+      // If CSS property has keyword "Transform"
+      this.$element.css( eval('({' + setTransform(this, value) + '})') );
+    } else {
       // Set CSS Styles if data-style contains multiple properties
       this.$element.css( setStyles(this, value) );
-
     }
   };
 
@@ -156,14 +175,45 @@
       value += Number(values[i] * element.options.factor) + separator;
     }
     return value;
+
+  function setTransform(element, value, index) {
+    var styles = index ? element.style[index] : element.style,
+        unit = index ? element.unit[index] : element.unit,
+        factor = element.options.factor ? element.options.factor : 0,
+        split = {
+          0 : styles.indexOf('['),
+          1: styles.indexOf(']')
+        },
+        property = styles.slice(styles.indexOf('transform'), split[0]),
+        transform = styles.slice(split[0] +1, split[1]),
+        values = typeof value === 'object' ? splitValues(value, factor, unit) : value * factor + unit,
+        style = '"' + property  +'":"' + transform + '(' + values + ')"';
+    return style
+  }
+
+  function splitValues(value, factor, unit) {
+    var values = '', separator = ''
+    for (var i in value) {
+      separator = value.length === Number(i)+1 ? '' : ',';
+      values += Number(value[i] * factor) + unit + separator
+    }
+    return values
   }
 
   function setStyles(element, value) {
     var style = '', separator = '', unit='';
     for(var i in element.style){
       separator = element.style.length === Number(i)+1 ? '' : ',';
-      if (element.style[i].indexOf('color') !== -1) {
-        style += '"' + element.style[i] + '"' + ':"' + $.Color(eval(value[i] ) ) + '"' + separator;
+      if (
+        element.style[i].indexOf('color') !== -1
+        &&
+        element.style[i].indexOf('transform') === -1
+      ) {
+        style += '"' + element.style[i] + '"' + ':"' + $.Color( JSON.parse(value[i]) ) + '"' + separator;
+      } else if (
+        element.style[i].indexOf('transform') !== -1
+      ) {
+        style += setTransform(element, eval(value[i]), i) + separator;
       } else {
         unit = element.unit !== '' ?  element.unit[i] : '',
         style += '"' + element.style[i] + '"' + ':' + '"' + (value[i] * element.options.factor) + unit + '"'  + separator;
@@ -175,20 +225,41 @@
 
   // Calculate CSS Styles in relation to the scroll position
   ChangeOnScroll.prototype.CalculatePositionAndSetStyles = function() {
-    if(this.style && typeof this.style === 'string' && this.style.indexOf('color') === -1) {
-
+    if (
+      this.style
+      &&
+      typeof this.style === 'string'
+      &&
+      this.style.indexOf('color') === -1 && this.style.indexOf('transform') === -1
+    ) {
       // Set CSS Style if data-style contains a single property
       this.$element.css( this.style, calculate(this, this.start, this.end, 0) + this.unit );
-
-    } else if(this.style && typeof this.style === 'string' && this.style.indexOf('color') !== -1 ) {
-
+    } else if (
+      this.style
+      &&
+      typeof this.style === 'string'
+      &&
+      this.style.indexOf('color')
+      &&
+      this.style.indexOf('transform') === -1
+    ) {
       // If CSS property has keyword "Color"
       this.$element.css( this.style, calculateColors(this) );
+    } else if(
+      this.style
+      &&
+      typeof this.style === 'string'
+      &&
+      this.style.indexOf('transform') !== -1
+    ) {
+      // If CSS property has keyword "Transform"
 
+      // TODO - Split Values of Start and End and calculate them
+      var transform = calculate(this, this.start, this.end, 0)
+      this.$element.css( eval('({' + setTransform(this, transform) + '})') );
     } else {
       // Set CSS Styles if data-style contains multiple properties
       this.$element.css( calculatePositionAndSetStyles(this) );
-
     }
   };
 
@@ -206,9 +277,17 @@
       for(var i in element.style) {
         separator = element.style.length === Number(i)+1 ? ' ' : ',';
         unit = typeof element.unit[i] !== 'undefined' ?  element.unit[i] : '';
-        if (element.style[i].indexOf('color') !== -1) {
+        if (
+          element.style[i].indexOf('color') !== -1
+          &&
+          element.style[i].indexOf('transform') === -1
+        ) {
           style += '"' + element.style[i] + '"' + ':"' + calculateColors(element, eval(element.start[i]), eval(element.end[i])) + '"' + separator;
-          //console.log(calculateColorsAndSetValues(element, element.start[i], element.end[i]))
+        } else if(
+          element.style[i].indexOf('transform') !== -1
+        ) {
+          // TODO - Split Values of Start and End and calculate them
+          style += setTransform(element, Number(calculate(element, element.start, element.end, i)), i) + separator;
         } else {
           style += '"' + element.style[i] + '"' + ':' + '"' + Number(calculate(element, element.start, element.end, i)) + unit + '"' + separator;
         }
@@ -222,8 +301,7 @@
     var r = Number(calculate(element, start ? start[0] : element.start[0], end ? end[0] : element.end[0]));
     var g = Number(calculate(element, start ? start[1] : element.start[1], end ? end[1] : element.end[1]));
     var b = Number(calculate(element, start ? start[2] : element.start[2], end ? end[2] : element.end[2]));
-    var a = start ? start[3] : element.start[3] ? Number(calculate(element, start ? start[3] : element.start[3], end ? end[3] : element.end[3])) : '';
-
+    var a = start && end ? calculate(element, start[3], end[3]) : calculate(element, element.start[3],element.end[3]) //
     var color = !a ? $.Color(r,g,b) : $.Color(r,g,b,a);
     return color;
   }
