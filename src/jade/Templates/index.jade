@@ -95,7 +95,7 @@ block main
                 td: p <var>style</var> 
                 td: p <code>data-style=""</code>
                 td
-                  p The preferred CSS style, which will be assigned to the element when scrolling. You can choose one or more properties separated by commas. 
+                  p The preferred CSS style, which will be assigned to the element when scrolling. You can choose one or more properties separated by semicolon. 
                   p In case of using multiple properties, you need to set the same amount of them also in:
                   ul
                     li <var>start</var> or <code>data-start=""</code>
@@ -107,7 +107,13 @@ block main
                     code &lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500"&gt;&lt;/div&gt;
                   p Multiple properties example:
                     br
-                    code &lt;div data-spy="scroller" data-style="left,top" data-start="0,10" data-end="500,1000"&gt;&lt;/div&gt;
+                    code &lt;div data-spy="scroller" data-style="left;top" data-start="0;10" data-end="500;1000"&gt;&lt;/div&gt;
+                  h4.margin-middle-top Compatible CSS properties 
+                    small as of version 2.1.1
+                  p Added support for transform porperty.
+                  h4.margin-middle-top Compatible CSS properties 
+                    small as of version 2.1.0 
+                  p Added support for RGB(a) color porperties.
                   h4.margin-middle-top Compatible CSS properties 
                     small as of version 2.0.0 
                   p For now, you can use all integer CSS properties.
@@ -150,6 +156,11 @@ block main
                     li If you set <code><var>bottom</var> : <var>1000</var></code> or <code>data-bottom="1000"</code>, the plugin stops to trigger the scroll event when <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var> reached <i>1000px</i> from the top or left edge of the browser window.
                     li If you set <code><var>bottom</var> : <var>'#bottomElement'</var></code> or <code>data-bottom="#bottomElement"</code>, the plugin stops to trigger the scroll event when <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var> reached the top or right edge of the given element.
                     li.text-primary If you leave this blank, this plugins sets the bottom trigger to the <b>bottom</b> or <b>right</b> edge of the affected element. Depending on your given configuration.
+              tr#bottom
+                td: p <var>parent</var> 
+                td: p <code>data-parent=""</code>
+                td
+                  p Top and bottom trigger of selected element. 
               tr#start
                 td: p <var>start</var> 
                 td: p <code>data-start=""</code>
