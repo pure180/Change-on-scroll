@@ -1,6 +1,6 @@
 {
-  "name": "DefaultTemplate",
-  "version": "1.0.3",
+  "name": "changeonscroll",
+  "version": "2.1.1",
   "description": "* nodejs\r * npm\r * bower\r * gulp",
   "main": "gulpfile.js",
   "dependencies": {
@@ -34,7 +34,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pure180/DefaultTemplate.git"
+    "url": "git+https://github.com/pure180/DefaultTemplate.git"
   },
   "author": "Daniel Pfisterer (info@daniel-pfisterer.de)",
   "license": "GPL-3.0",
