@@ -32,8 +32,13 @@
       this.end          = String(this.options.end).indexOf(';') > -1 ? this.options.end.split(";") : this.options.end;
     }
 
+    if(typeof this.options.unit === 'object') {
+      this.unit          = this.options.unit;
+    } else {
+      this.unit          = String(this.options.unit).indexOf(';') > -1 && this.options.unit ? this.options.unit.split(";") :  String(this.options.unit);
+    }
+
     this.style          = String(this.options.style).indexOf(';') > -1 ? this.options.style.split(";") : this.options.style;
-    this.unit           = String(this.options.unit).indexOf(';') > -1 && this.options.unit ? this.options.unit.split(";") :  String(this.options.unit);
 
     if(this.options.indicators) {
       $('.inidcator.top').css({'top': this.top, 'display' : 'block'});
@@ -161,7 +166,7 @@
       this.style.indexOf('transform') !== -1
     ) {
       // If CSS property has keyword "Transform"
-      this.$element.css( eval('({' + setTransform(this, value) + '})') );
+      this.$element.css( JSON.parse('{' + setTransform(this, value) + '}') );
     } else {
       // Set CSS Styles if data-style contains multiple properties
       this.$element.css( setStyles(this, value) );
@@ -186,17 +191,54 @@
           1: styles.indexOf(']')
         },
         property = styles.slice(styles.indexOf('transform'), split[0]),
-        transform = styles.slice(split[0] +1, split[1]),
-        values = typeof value === 'object' ? splitValues(value, factor, unit) : value * factor + unit,
-        style = '"' + property  +'":"' + transform + '(' + values + ')"';
+        transformValue = styles.slice(split[0] +1, split[1]),
+        style, values;
+
+    if(transformValue.indexOf(',') > -1){
+
+      value = typeof value === 'undefined' ? {'start': element.start, 'end': element.end} : value;
+      value = typeof value === 'string' ? JSON.parse(value) : value;
+
+      values = splitTransformValues(transformValue.split(','), value, factor, unit, element);
+      style = '"' + property  +'":"' + values + '"';
+    } else {
+
+      values = typeof value === 'object' ? splitValues(value, factor, unit) : value * factor + unit;
+      style = '"' + property  +'":"' + transformValue + '(' + values + ')"';
+    }
+
     return style
   }
 
+  function seperate (object, index, separator) {
+    return object.length === Number(index)+1 ? '' : separator;
+  }
+
   function splitValues(value, factor, unit) {
-    var values = '', separator = ''
+    var values = '', separator = '';
     for (var i in value) {
       separator = value.length === Number(i)+1 ? '' : ',';
       values += Number(value[i] * factor) + unit + separator
+    }
+    return values
+  }
+
+  function splitTransformValues(object, value, factor, unit, element){
+    var values = '', calc = '';
+
+    for(var i in object){
+      if(value.start && value.end) {
+        unit = typeof unit === 'object' ? unit : JSON.parse(unit)
+        for(var key in value.start[i]) {
+          calc = calculateTransform(element, value.start[i], value.end[i], i, unit[i]) + seperate(value.start[i], key, ' ')
+        }
+        values += object[i] + '(' + calc + ')' + seperate(object, i, ' ')
+      } else if(typeof value[i] === 'object') {
+        var units = typeof unit === 'object' ? unit : JSON.parse(unit)
+        values += object[i] + '(' + splitValues(value[i], factor, units[i]) + ')' + seperate(object, i, ' ')
+      } else {
+        values += object[i] + '(' + splitValues(value[i], factor, unit[i]) + ')' + seperate(object, i, ' ')
+      }
     }
     return values
   }
@@ -214,13 +256,17 @@
       } else if (
         element.style[i].indexOf('transform') !== -1
       ) {
-        style += setTransform(element, eval(value[i]), i) + separator;
+        if(typeof JSON.parse(value[i])[0] === 'object'){
+          style += setTransform(element, value[i], i) + separator;
+        } else {
+          style += setTransform(element, JSON.parse(value[i]), i) + separator;
+        }
       } else {
         unit = element.unit !== '' ?  element.unit[i] : '',
         style += '"' + element.style[i] + '"' + ':' + '"' + (value[i] * element.options.factor) + unit + '"'  + separator;
       }
     }
-    var styles = eval('({' + style + '})');
+    var styles = JSON.parse('{' + style + '}');
     return styles;
   }
 
@@ -254,10 +300,13 @@
       this.style.indexOf('transform') !== -1
     ) {
       // If CSS property has keyword "Transform"
-
-      // TODO - Split Values of Start and End and calculate them
-      var transform = calculate(this, this.start, this.end, 0)
-      this.$element.css( eval('({' + setTransform(this, transform) + '})') );
+      var transform;
+      if (typeof this.start[0] === 'object' && typeof this.end[0] === 'object') {
+        this.$element.css( JSON.parse('{' + setTransform(this) + '}') );
+      } else {
+        transform = calculateTransform(this, this.start, this.end, 0)
+        this.$element.css( JSON.parse('{' + setTransform(this, transform) + '}') );
+      }
     } else {
       // Set CSS Styles if data-style contains multiple properties
       this.$element.css( calculatePositionAndSetStyles(this) );
@@ -283,17 +332,23 @@
           &&
           element.style[i].indexOf('transform') === -1
         ) {
-          style += '"' + element.style[i] + '"' + ':"' + calculateColors(element, eval(element.start[i]), eval(element.end[i])) + '"' + separator;
+          style += '"' + element.style[i] + '"' + ':"' + calculateColors(element, JSON.parse(element.start[i]), JSON.parse(element.end[i])) + '"' + separator;
         } else if(
           element.style[i].indexOf('transform') !== -1
         ) {
-          // TODO - Split Values of Start and End and calculate them
-          style += setTransform(element, Number(calculate(element, element.start, element.end, i)), i) + separator;
+          var transformStart = element.start[i].indexOf('[') === -1 ? element.start[i] : JSON.parse(element.start[i]);
+          var transformEnd = element.end[i].indexOf('[') === -1 ? element.end[i] : JSON.parse(element.end[i]);
+          if(typeof transformStart[0] === 'object' && typeof transformEnd[0] === 'object'){
+            style += setTransform(element, {'start': transformStart, 'end': transformEnd}, i) + separator;
+          } else {
+            var transform = calculateTransform(element, transformStart, transformEnd, i);
+            style += setTransform(element, transform, i) + separator;
+          }
         } else {
           style += '"' + element.style[i] + '"' + ':' + '"' + Number(calculate(element, element.start, element.end, i)) + unit + '"' + separator;
         }
       }
-      var styles = eval('({' + style + '})');
+      var styles = JSON.parse('{' + style + '}');
       return styles;
   }
 
@@ -305,6 +360,23 @@
     var a = start && end ? calculate(element, start[3], end[3]) : calculate(element, element.start[3],element.end[3]) //
     var color = !a ? $.Color(r,g,b) : $.Color(r,g,b,a);
     return color;
+  }
+
+  function calculateTransform(element, start, end, index, unit) {
+    var arr = [], separator = '';
+    if(typeof start === 'object' && typeof end === 'object') {
+      for(var i in start) {
+        separator = start.length === Number(i)+1 ? ' ' : ',';
+        unit = unit ? unit : ''
+        arr += calculate(element, start[i], end[i], index) + unit + separator;
+      }
+      return unit ? arr : JSON.parse('[' + arr + ']');
+    } else {
+      arr = calculate(element, start, end, index) + separator;
+      return JSON.parse('[' + arr + ']');
+    }
+
+
   }
 
   function Plugin(option) {
