@@ -14,21 +14,27 @@ block main
             li: a(href="#What_does_it_do" title="What does it do?") What does it do?
             li: a(href="#How_to_use_this_plugin" title="How to use this plugin") How to use this plugin
             li
-              a(href="#Plugin_Options" title="Plugin Options") Plugin Options
-              ul
+              a(href="#PluginOptions" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="PluginOptions" title="Plugin Options") Plugin Options <span class="caret"></span>
+              ul#PluginOptions.collapse
                 li: a(href="#selector" title="Selector") Selector
                 li: a(href="#style" title="CSS style") CSS style
                 li: a(href="#top" title="Top trigger") Top trigger
                 li: a(href="#bottom" title="Bottom trigger") Bottom trigger
+                li: a(href="#parent" title="Parent trigger") Parent trigger
                 li: a(href="#start" title="Starting value") Starting value
                 li: a(href="#end" title="Ending value") Ending value
+                li: a(href="#unit" title="Ending value") CSS Units
                 li: a(href="#reverse" title="Reverse calculation") Reverse calculation
                 li: a(href="#factor" title="Multiply factor") Multiply factor
                 li: a(href="#beforeClass" title="Class name before") Class name before
                 li: a(href="#whileClass" title="Class name before") Class name while
                 li: a(href="#afterClass" title="Class name before") Class name after
-                
             li: a(href="#Plugin_Events" title="Plugin Events") Plugin Events
+            li: a(href="#Examples"  role="button" data-toggle="collapse" aria-expanded="false" aria-controls="Examples" title="Examples") Examples <span class="caret"></span>
+              ul#Examples.collapse
+                li: a(href="integer_css_properties.html" title="Selector") Integer CSS properties
+                li: a(href="integer_css_properties.html" title="Selector") Integer CSS properties
+                
           a.btn.btn-success.margin-small-bottom.display-block(href='https://github.com/pure180/Change-on-scroll/archive/gh-pages.zip' role='button' title="Download Change on scroll")
             | Download 
             i.glyphicon.glyphicon-download
@@ -156,59 +162,85 @@ block main
                     li If you set <code><var>bottom</var> : <var>1000</var></code> or <code>data-bottom="1000"</code>, the plugin stops to trigger the scroll event when <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var> reached <i>1000px</i> from the top or left edge of the browser window.
                     li If you set <code><var>bottom</var> : <var>'#bottomElement'</var></code> or <code>data-bottom="#bottomElement"</code>, the plugin stops to trigger the scroll event when <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var> reached the top or right edge of the given element.
                     li.text-primary If you leave this blank, this plugins sets the bottom trigger to the <b>bottom</b> or <b>right</b> edge of the affected element. Depending on your given configuration.
-              tr#bottom
+              tr#parent
                 td: p <var>parent</var> 
                 td: p <code>data-parent=""</code>
                 td
-                  p Top and bottom trigger of selected element. 
+                  p Instead of using <code>data-top=""</code> and <code>data-bottom=""</code>, you can use <code>data-parent=""</code> with a common jquery selector like <code><var>'#my_element_by_ID'</var></code>, <code><var>'.my_element_by_class'</var></code> or any other selector. If this is set, the Plugin starts to trigger the changes on top/left and stops on the bottom/right of the selected element.
+                  blockquote.margin-small-top
+                    p.text-danger This option has to be an existing element.
               tr#start
                 td: p <var>start</var> 
                 td: p <code>data-start=""</code>
                 td
-                  p Starting value of each CSS propertie. You can set one or multiple values separated by commas for the given CSS style properties in <var>style</var> or <code>data-style=""</code>.
+                  p Starting value of each CSS propertie. You can set one or multiple values separated by semicolon for the given CSS style properties in <var>style</var> or <code>data-style=""</code>.
                   p In case of using multiple properties, you need to set the same amount of them also in:
                   ul
                     li <var>style</var> or <code>data-style=""</code>
                     li <var>end</var> or <code>data-end=""</code>
                   blockquote.margin-small-top
                     p.text-danger Unless you don't set them, this plugin won't work as expected.
-                  p Single property example:
+                  p: b Single property example:
                     br
                     code &lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500"&gt;&lt;/div&gt;
-                  p Multiple properties example:
+                  p: b Multiple properties example:
                     br
-                    code &lt;div data-spy="scroller" data-style="left,top" data-start="0,10" data-end="500,1000"&gt;&lt;/div&gt;
+                    code &lt;div data-spy="scroller" data-style="left;top" data-start="0;10" data-end="500;1000"&gt;&lt;/div&gt;
 
                   p This value is needed to calculates the percentage result in the relation to
                   ul
                     li the top or left edge of the browser window <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var>,
                     li this starting value (<var>start</var>, <code>data-start=""</code>),
                     li the endinging value (<var>end</var>, <code>data-end=""</code>),
-                    li the factor (<var>factor</var>, <code>data-factor=""</code>).
               tr#end
                 td: p <var>end</var> 
                 td: p <code>data-end=""</code>
                 td
-                  p Ending value of each CSS propertie. You can set one or multiple values separated by commas for the given CSS style properties in <var>style</var> or <code>data-style=""</code>.
+                  p Ending value of each CSS propertie. You can set one or multiple values separated by semicolon for the given CSS style properties in <var>style</var> or <code>data-style=""</code>.
                   p In case of using multiple properties, you need to set the same amount of them also in:
                   ul
                     li <var>style</var> or <code>data-style=""</code>
                     li <var>start</var> or <code>data-start=""</code>
                   blockquote.margin-small-top
                     p.text-danger Unless you don't set them, this plugin won't work as expected.
-                  p Single property example:
+                  p: b Single property example:
                     br
                     code &lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500"&gt;&lt;/div&gt;
-                  p Multiple properties example:
+                  p: b Multiple properties example:
                     br
-                    code &lt;div data-spy="scroller" data-style="left,top" data-start="0,10" data-end="500,1000"&gt;&lt;/div&gt;
+                    code &lt;div data-spy="scroller" data-style="left;top" data-start="0;10" data-end="500;1000"&gt;&lt;/div&gt;
 
                   p This value is needed to calculates the percentage result in the relation to
                   ul
                     li the top or left edge of the browser window <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var>,
                     li the starting value (<var>start</var>, <code>data-start=""</code>),
                     li this endinging value (<var>end</var>, <code>data-end=""</code>),
-                    li the factor (<var>factor</var>, <code>data-factor=""</code>).
+              tr#unit
+                td: p <var>unit</var> 
+                td: p <code>data-unit=""</code>
+                td
+                  p Unit for expressing the length of each given value in <code>data-start=""</code> and <code>data-end=""</code>. You can set one or multiple values separated by semicolon for the given CSS style properties in <var>style</var> or <code>data-style=""</code>.
+                  p In case of using multiple properties, you need to set the same amount of them also in:
+                  ul
+                    li <var>style</var> or <code>data-style=""</code>
+                    li <var>start</var> or <code>data-start=""</code>
+                    li <var>end</var> or <code>data-end=""</code>
+                  blockquote.margin-small-top
+                    p.text-danger Unless you don't set them, this plugin won't work as expected.
+                  p You can use all common CSS units like: <br> em, ex, %, px, cm, mm, in, pt, pc, ch, rem, vh, vw, vmin, vmax
+                  p: b Single property example:
+                    br
+                    code &lt;div data-spy="scroller" data-style="left" data-start="0" data-end="500" data-unit="px"&gt;&lt;/div&gt;
+                  p: b Multiple properties example:
+                    br
+                    code &lt;div data-spy="scroller" data-style="left;top" data-start="0;10" data-end="500;1000" data-unit="px;em"&gt;&lt;/div&gt;
+
+                  p This value is needed to calculates the percentage result in the relation to
+                  ul
+                    li the top or left edge of the browser window <var>$(window).scrollTop()</var> or <var>$(window).scrollLeft()</var>,
+                    li the CSS proterty (<var>style</var>, <code>data-style=""</code>),
+                    li the starting value (<var>start</var>, <code>data-start=""</code>),
+                    li this endinging value (<var>end</var>, <code>data-end=""</code>),
               tr#reverse
                 td: p <var>reverse</var> 
                 td: p <code>data-reverse=""</code>
